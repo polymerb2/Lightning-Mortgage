@@ -1,0 +1,14 @@
+{
+    "en": {
+        "lightningMortgage": "Lightning Mortgage",
+        "login": "Login",
+        "username": "Username",
+        "footerContent": "All rights reserved to"
+    },
+    "du": {
+        "lightningMortgage": "bliksem hypotheek",
+        "login": "Login",
+        "username": "Gebruikersnaam",
+        "footerContent": "Alle rechten voorbehouden aan"
+    }
+}

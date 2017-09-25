@@ -1,35 +1,31 @@
-
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ @license Copyright (c) 2016 The Polymer Project Authors. All rights reserved. This code may only be used under the BSD style
+license found at http://polymer.github.io/LICENSE.txt The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel = "import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="lm-login">
-  
+
   <template id="login" is="dom-bind">
     <style include="shared-styles">
-      .login-container{
+      .login-container {
         margin: 100px auto;
         width: 30%;
         border: 1px solid #e8e8e8;
-        
+
         padding: 15px;
       }
-      .button-class{
+
+      .button-class {
         margin-top: 15px;
       }
-
       /* .button-class{
         width: 5%;
             height: 45px;
@@ -47,78 +43,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             padding: 0 15px;
             border: none;
             } */
-            /* .input_reg{
+      /* .input_reg{
               float: left;
               margin-left: 32%;
               font-size: 17px
-            
+
             } */
-            .header
-            {
-              padding-top: 6%;
-              text-align: center;
-              margin-bottom: -4%;
-              color:#0b0080;
-              /* padding: 10px;
+
+      .header {
+        padding-top: 6%;
+        text-align: center;
+        margin-bottom: -4%;
+        color: #0b0080;
+        /* padding: 10px;
               border-bottom: 1px solid #e8e8e8;
               margin-top: 50px;
               color: #f60;
               font-weight: bold; */
-            }
-            .invalidUser
-            {
-              text-align: center;
-              padding-top: 45px;
-              color: red;
-              font-size: 13px;
-              margin-top: 10px;
-              padding:2px 5px;
-            }
-            .regi_btn{
-              display: inline-block;
-              float: right;
-              margin-top: 25px;
-            }
-            .regi_btn a{
-              font-size: 14px;
-              color: #301067;
-            }
-     
+      }
+
+      .invalidUser {
+        text-align: center;
+        padding-top: 45px;
+        color: red;
+        font-size: 13px;
+        margin-top: 10px;
+        padding: 2px 5px;
+      }
+
+      .regi_btn {
+        display: inline-block;
+        float: right;
+        margin-top: 25px;
+      }
+
+      .regi_btn a {
+        font-size: 14px;
+        color: #301067;
+      }
     </style>
 
-      <h2 class="header">Login</h2>
-      <div class="login-container">
-          <div id="Reg">
-            <form name="form">
-              
-              <!-- <h2 class="header">Login to Lightning Mortgage</h2> -->
-              <div class = "invalidUser"> <span hidden="{{hideMessage}}">{{ajaxResponse.message}}</span></div>
-  
+    <h2 class="header">Login</h2>
+    <div class="login-container">
+      <div id="Reg">
+        <form name="form">
 
-              <paper-input class="input_field" name="username" id="username" value="{{userId::input}}" type="text" placeholder="  Username" maxlength="10" required error-message="Please Enter Username" auto-validate allowed-pattern="[a-zA-Z]"><iron-icon icon="account-circle" class="icon_space" slot="prefix"></iron-icon></paper-input>
-             <paper-input class="input_field" name="password" id="password"  value="{{password::input}}" type="password" required error-message="Please input Password" auto-validate placeholder="  Password"><iron-icon icon="lock-open" class="icon_space" slot="prefix"></iron-icon></paper-input>
-             <div class="regi_btn"><iron-icon icon="assignment-ind" class="icon_space" slot="prefix"></iron-icon>&nbsp<a href="register-profile" class="input_reg">Register</a></div>
-             <paper-button raised class="button-class" on-tap="login" value="Login"><iron-icon icon="assignment-turned-in"></iron-icon>Login</paper-button>
-            </form>
-          </div>
-        </div>
-     
-    <iron-ajax
-              id="ironAjaxElement" 
-               url="http://10.138.64.202:8880/lightningmortgage/customer/userLogin"
-               handle-as="json"
-               body='{{postBody}}'
-               method="post"
-               on-response="handleResponse"
-               content-type="application/json"
-               last-response="{{ajaxResponse}}"
-               >
+          <!-- <h2 class="header">Login to Lightning Mortgage</h2> -->
+          <div class="invalidUser"> <span hidden="{{hideMessage}}">{{ajaxResponse.message}}</span></div>
+
+
+          <paper-input class="input_field" name="username" id="username" value="{{userId::input}}" type="text" placeholder="{{localize('username')}}"
+            maxlength="10" required error-message="Please Enter Username" auto-validate allowed-pattern="[a-zA-Z]">
+            <iron-icon icon="account-circle" class="icon_space" slot="prefix"></iron-icon>
+          </paper-input>
+          <paper-input class="input_field" name="password" id="password" value="{{password::input}}" type="password" required error-message="Please input Password"
+            auto-validate placeholder="  Password">
+            <iron-icon icon="lock-open" class="icon_space" slot="prefix"></iron-icon>
+          </paper-input>
+          <div class="regi_btn">
+            <iron-icon icon="assignment-ind" class="icon_space" slot="prefix"></iron-icon>&nbsp<a href="register-profile" class="input_reg">Register</a></div>
+          <paper-button raised class="button-class" on-tap="login" value="Login">
+            <iron-icon icon="assignment-turned-in"></iron-icon>Login</paper-button>
+        </form>
+      </div>
+    </div>
+
+    <iron-ajax id="ironAjaxElement" url$="[[api]]lightningmortgage/customer/userLogin" handle-as="json" body='{{postBody}}' method="post"
+      on-response="handleResponse" content-type="application/json" last-response="{{ajaxResponse}}">
     </iron-ajax>
     <!-- <span>{{ajaxResponse.responseMessage}}</span> -->
   </template>
 
   <script>
-    class Login extends Polymer.Element {
+    class Login extends LmGlobal {
       static get is() { return 'lm-login'; }
       static get properties() {
         return {
@@ -129,33 +126,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           postBody: {
             type: String,
             computed: 'getPostBody(userId, password)'
-        },
-        hideMessage:{
-          type:String,
-          value:""
-         }
+          },
+          hideMessage: {
+            type: String,
+            value: ""
+          }
         }
       }
-      
+
       login() {
         let userDetails = this.postBody;
-        if(userDetails && userDetails.userId && userDetails.password) {
+        if (userDetails && userDetails.userId && userDetails.password) {
           this.ajaxResponse;
           this.$.ironAjaxElement.generateRequest();
         }
       }
       handleResponse(data) {
-        var result= data.detail.response 
-        if(result && result.status ==="200") {
-          result.message="";
-        localStorage.setItem('userId', result.userId);
-        window.history.pushState({}, null, '/view-profile');
-        window.dispatchEvent(new CustomEvent('location-changed'));
+        var result = data.detail.response
+        if (result && result.status === "200") {
+          result.message = "";
+          localStorage.setItem('userId', result.userId);
+          window.history.pushState({}, null, '/view-profile');
+          window.dispatchEvent(new CustomEvent('location-changed'));
         }
-     
-       
+
+
       }
-      getPostBody (userId, password) {
+      getPostBody(userId, password) {
         return {
           userId: userId,
           password: password
@@ -165,6 +162,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     window.customElements.define(Login.is, Login);
   </script>
-</dom-module> 
-
-
+</dom-module>
