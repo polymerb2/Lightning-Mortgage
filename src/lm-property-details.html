@@ -68,20 +68,20 @@
          <!-- <h3>Property Details</h3> -->
         	<section>
             <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite>
-          		<paper-input name="propDoorNo" class="" label="Door Number" id="propDoorNo" value="{{propertydetails.propDoorNo::input}}"></paper-input>
-        			<paper-input name="propAddressLine1" class="" label="Address Line 1" id="propAddressLine1" value="{{propertydetails.propAddressLine1::input}}"></paper-input>
-        			<paper-input name="propAddressLine2"  class="" label="Address Line 2" id="propAddressLine2" value="{{propertydetails.propAddressLine2::input}}"></paper-input>
-              <paper-input name="propPostCode" class="floatBox" label="Post Code" id="propPostCode" value="{{propertydetails.propPostCode::input}}" required auto-validate error-message="Post code required" on-blur="getCityInfo"></paper-input>
-        			<paper-input name="propCity" class="floatBox" readonly label="City" id="propCity" value="{{propertydetails.propCity::input}}"></paper-input>
+          		<paper-input name="propDoorNo" class="" label="{{localize('prop.doorNumberLabel')}}" id="propDoorNo" value="{{propertydetails.propDoorNo::input}}"></paper-input>
+        			<paper-input name="propAddressLine1" class="" label="{{localize('prop.address1Label')}}" id="propAddressLine1" value="{{propertydetails.propAddressLine1::input}}"></paper-input>
+        			<paper-input name="propAddressLine2"  class="" label="{{localize('prop.address2Label')}}" id="propAddressLine2" value="{{propertydetails.propAddressLine2::input}}"></paper-input>
+              <paper-input name="propPostCode" class="floatBox" label="{{localize('prop.postalCodeLabel')}}" id="propPostCode" value="{{propertydetails.propPostCode::input}}" required auto-validate error-message="{{localize('prop.postCodeErrorMsg')}}" on-blur="getCityInfo"></paper-input>
+        			<paper-input name="propCity" class="floatBox" readonly label="{{localize('prop.cityLabel')}}" id="propCity" value="{{propertydetails.propCity::input}}"></paper-input>
               <div style="clear: both"></div>
               <br/>
-              <paper-button id="btnSubmit" raised class="custom orange" on-click="submitDetails">Submit</paper-button>
+              <paper-button id="btnSubmit" raised class="custom orange" on-click="submitDetails">{{localize('prop.propertySubmit')}}</paper-button>
 
               <paper-dialog id="dialogBox" no-cancel-on-outside-click>
                 <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
                 </div>
-                <label>Please enter the postal code</label>   
+                <label>{{localize('prop.enterPostCodeMsg')}}</label>   
                 <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>             
               </paper-dialog>
 
@@ -89,7 +89,7 @@
                 <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
                 </div>
-                <label>Invalid postal code</label> 
+                <label>{{localize('prop.invalidPostCodeMsg')}}</label> 
                 <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>               
               </paper-dialog>
 
@@ -97,7 +97,7 @@
                 <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
                 </div>
-                <label>Invalid User or Postal code</label> 
+                <label>{{localize('invalidPcUserMsg')}}</label> 
                 <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>               
               </paper-dialog>
 
@@ -110,7 +110,7 @@
         </div>
     </template>
     <script>
-        class PropertyDetails extends Polymer.Element {
+        class PropertyDetails extends LmGlobal {
 
             static get is() { return 'property-details'; }
             static get properties() {
