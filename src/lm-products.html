@@ -236,6 +236,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     position: relative;
                     top: 13px;
             }
+            h2.error{
+                color:red;
+            }
+            .v-space{
+            height: 15px;
+            }
 
         </style>
 
@@ -264,11 +270,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <div class='pad-left'>Down Payment : <span class="mar-left">&euro;{{_convertToLocale(offerdownpayment)}} </span></div>
                     <div class='pad-left'>Repayment Mode : <span class='mar-left-1'>Monthly </span></div>
                 </div>        
-                <div class="center">&nbsp;</div>        
+                <div class="center">&nbsp;</div> 
+
                 <div class="vas-icons">
                     <h3 class="center-text">Would you be interested in amazing deals from our trusted partners?</h3>
 
                 <vas-service itemindex='{{vasArray}}' on-click='updateOfferAmount'></vas-service>
+                <div class='v-space'></div> 
                  </div>
                 <div class="center">&nbsp;</div>                
 
@@ -306,6 +314,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                             <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss on-click='closeTerms'></paper-icon-button>
                         </div>
                         <term-conditions terms="[[termsArray]]"></term-conditions>
+                    </paper-dialog>
+
+                    <paper-dialog id="errorDialoge" no-cancel-on-outside-click entry-animation="scale-up-animation" exit-animation="scale-down-animation" >
+                    <div on-click='_closeErrorDialog'>
+                        <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button >   
+                        </div>                     
+                        <div>
+                            <h2 class='error'>Error in saving Offer details.Please try again.</h2>
+                        </div>
+                        
                     </paper-dialog>
                 
                     <div class="center">&nbsp;</div>
@@ -387,24 +405,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             constructor() {
                 super();
                 this.products = [];
+                this.customerId='';
+                this.postalCode='';
             }
             connectedCallback() { 
                 super.connectedCallback();
-                let customerId = localStorage.getItem("userId");
-                let postalCode = localStorage.getItem("postalCode");
+                this.customerId = localStorage.getItem("userId");
+                this.postalCode = localStorage.getItem("postalCode");
                 let balance = localStorage.getItem("outstandingBalance");
-                if (postalCode == null || postalCode == "") {
-                    postalCode = "0";
+                if (this.postalCode == null || this.postalCode == "") {
+                    this.postalCode = "0";
                 }
                 if (balance == null || balance == "") {
                     balance = 0;
                 }
-                console.log("local storage values" + customerId + postalCode + balance);
               //  this.onloadurl = "http://10.138.13.58:8080/lightningmortgage/identifyProduct/123/1012CM/0";
-                this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + customerId + "/" + postalCode + "/" + balance;
-               // this.onloadurl = "src/products.json";
-                console.log("url " + this.onloadurl);
-                console.log("url " + this.onloadurl);
+               // this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
+                this.onloadurl = "src/products.json";
                 this.$.ironAjaxOnload.generateRequest();
             }
             static get is() { return 'product-preference'; }
@@ -442,11 +459,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     epi: {
                         type: String,
-                        value: "392"
+                        value: ""
                     },
                     apr: {
                         type: String,
-                        value: "2.4"
+                        value: ""
                     },
                     postBody: {
                         type: Object,
@@ -467,10 +484,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     termsArray: Array,
                     vasArray: {
                         type: Array,
-                        value: [{ 'id': 0, 'name': 'Renovation', 'value': 1000, 'url': 'https://www.asianpaints.com/' },
-                        { 'id': 1, 'name': 'Landscape', 'value': 3000, 'url': 'http://www.gardeners.com/' },
-                        { 'id': 2, 'name': 'Brick Wall', 'value': 4000, 'url': 'https://www.99acres.com/' },
-                        { 'id': 3, 'name': 'Garage', 'value': 5000, 'url': 'https://www.housejoy.in/' }]
+                        value: [{ 'id': 0, 'name': 'Renovation', 'value': 100, 'url': 'https://www.asianpaints.com/' },
+                        { 'id': 1, 'name': 'Landscape', 'value': 200, 'url': 'http://www.gardeners.com/' },
+                        { 'id': 2, 'name': 'Brick Wall', 'value': 300, 'url': 'https://www.99acres.com/' },
+                        { 'id': 3, 'name': 'Garage', 'value': 400, 'url': 'https://www.housejoy.in/' }]
                     }
                 }
             }
@@ -522,31 +539,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             }
             _productChanged(newValue, oldValue) {
-                console.log("value changed " + newValue);
+               
             }
             _paramChanged(newValue, oldValue) {
-                console.log(oldValue + "new" + newValue);
             }
             _submitInfo() {
                 this.datasubmitted = true;
-                console.log("clicked submit");
-                this.postBody.customerId = 111;
+                this.postBody.customerId = this.customerId;
                 this.postBody.epi = this.epi;
                 this.postBody.offerTerm = this.offerterm;
                 this.postBody.offerValue = this.offeramount;
-                this.postBody.downPayment = 20000;
-                this.postBody.annualPercentageRate = 2.3;
-                this.$.ironAjaxSubmit.generateRequest();
-                this.$.checkboxterm.disabled = true;
-                this.$.submitbtn.disabled = true;
-                this.$.submitbtn.classList.add('paper-button-disabled');
-                this.$.submitbtn.classList.remove('paper-button');
-                this.$.dialoge.open();
-                this.$.cover.style.display = "block";
+                this.postBody.downPayment = this.offerdownpayment;
+                this.postBody.annualPercentageRate = this.apr;
+                var request = this.$.ironAjaxSubmit.generateRequest();
+                let _self = this;
+                request.completes.then(function(req) {
+                    _self.datasubmitted = true;
+                    _self.$.dialoge.open();
+                    _self.$.checkboxterm.disabled = true;
+                    _self.$.submitbtn.disabled = true;
+                    _self.$.submitbtn.classList.add('paper-button-disabled');
+                    _self.$.submitbtn.classList.remove('paper-button');
+                    _self.$.cover.style.display = "block";
+                  }, function(rejected) {
+                    _self.$.errorDialoge.open();
+                    _self.$.checkboxterm.disabled = true;
+                    _self.$.cover.style.display = "block";
+                  });
+
+
             }
             sendResponse(data) {
-                if (data && data.status === "200") {
-                    this.datasubmitted = true
+               
+                if (data && data.status == "200") {
+                     console.log(data);
                 }
             }
             setTermMinMaxStep(data) {
@@ -602,18 +628,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.productObject = this.products.product[this.productIndex];
                 if (this.products) {
                     this.productId = this.productObject.productId;
-                    console.log("hi" + JSON.stringify(this.productDetails));
                     this.termValues = this.setTermMinMaxStep(this.productDetails);
                     this.offerterm = this.termValues.maxTerm;
                     this.amountValues = this.setAmountMinMaxStep(this.productDetails, this.offerterm);
                     this.offeramount = this.amountValues.maxAmount;
                     this.termsArray = this.productObject.terms;
-                    // this.offerdownpayment=10000;
                     this.epi = this.productDetails[this.productDetails.length - 1].epi;
                     this.apr = this.productDetails[0].annualPercentageRate;
                     this.offerdownpayment = this.productDetails[0].minDownpayment;
                     this.totaloffervalue = this.offeramount + this.offerdownpayment;
-                    this.currentDate = "22 Sep 2017";
+                   // this.currentDate = "22 Sep 2017";
                     var today = new Date();
                     var dated = today.getDate();
                     var monthd = today.getMonth() + 1;
@@ -630,7 +654,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
             }
             valchanged(event) {
-                console.log(this.$.checkboxterm.checked);
                 if (this.$.checkboxterm.checked) {
                     this.$.submitbtn.classList.remove('paper-button-disabled');
                     this.$.submitbtn.classList.add('paper-button');
@@ -648,17 +671,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             closeTerms(event){
                 this.$.cover.style.display = "none";
             }
+            _closeErrorDialog(event){
+                this.$.cover.style.display = "none";
+            }
 
            
             closedialog() {
-                console.log("closed");
                 window.history.pushState({}, null, '/home');
                 window.dispatchEvent(new CustomEvent('location-changed'));
             }
-            // window.addEventListener('totalvas-changed',function(){
-            //     alert(1);
-            // });
-            
 
         }
         window.customElements.define(ProductPreference.is, ProductPreference);
