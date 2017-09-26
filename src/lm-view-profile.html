@@ -333,14 +333,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-              <h2>Knock Out Check Failed</h2>
-              <label>Please choose the two options below to proceed further</label>
+              <h2>{{localize('profile.KnockoutFailed1')}}</h2>
+              <label>{{localize('profile.KnockoutFailed2')}}</label>
               <ul>
-                <li><label><a href="">Request call back</a></label></li>
-                <li><label>Visit nearest branch in order to understand reject reason and provide necessary documents.</label></li>
+                <li><label><a href="">{{localize('profile.KnockoutFailed3')}}</a></label></li>
+                <li><label>{{localize('profile.KnockoutFailed4')}}</label></li>
               </ul>
               
-              <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>               
+              <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>
+                  {{localize('profile.ok')}}
+                </paper-button>               
           </paper-dialog>
 
           <paper-dialog id="confirmText" no-cancel-on-outside-click entry-animation="scale-up-animation"

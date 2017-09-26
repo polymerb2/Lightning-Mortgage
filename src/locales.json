@@ -95,7 +95,11 @@
     "profile.Cancel": "Cancel",
     "profile.ConfirmText1": " Please ensure that the information you update matches with official records.",
     "profile.ConfirmText2": " You will be required to submit documents to support the change before the mortgage is processed.",
-    "profile.Ok": "OK"
+    "profile.Ok": "OK",
+    "profile.KnockoutFailed1": "Knock Out Check Failed",
+    "profile.KnockoutFailed2": "Please choose the two options below to proceed further",
+    "profile.KnockoutFailed3": "Request call back",
+    "profile.KnockoutFailed4": "Visit nearest branch in order to understand reject reason and provide necessary documents."
   },
   "du": {
     "lightningMortgage": "Bliksem Hypotheek",
@@ -194,5 +198,9 @@
     "profile.ConfirmText1": "Zorg ervoor dat de informatie die u bijwerkt bij officiële records.",
     "profile.ConfirmText2": "U dient documenten in te dienen ter ondersteuning van de wijziging voordat de hypotheek wordt verwerkt.",
     "profile.Ok": "OK",
+    "profile.KnockoutFailed1": "Knockout Check mislukt",
+    "profile.KnockoutFailed2": "Kies alstublieft de onderstaande twee opties om verder te gaan",
+    "profile.KnockoutFailed3": "Vraag terug terug",
+    "profile.KnockoutFailed4": "Bezoek de dichtstbijzijnde tak om de reden van verwerping te begrijpen en de nodige documenten te verstrekken."
   }
 }
