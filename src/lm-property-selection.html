@@ -20,10 +20,10 @@
             } 
             .prop-details h3{
             	margin: 0 auto;
-                width: 53%;
+                width: 58%;
             }
             .propSelection{
-                width: 50%;
+                width: 60%;
                 margin: 0 auto;
             }
             paper-radio-button {
@@ -33,26 +33,27 @@
         </style>
 
         <div class="prop-details card">
-         <h3>Do you want mortgage on a new property or refinance an existing mortgage?</h3>
+         <!-- <h3>Do you want mortgage on a new property or refinance an existing mortgage?</h3> -->
+         <h3>{{localize('prop.selectPropertyQuestion')}}</h3>
         	<section  class="propSelection">        		
 				<paper-radio-group id="propSelection" selected="getPropDetails">
-			        <paper-radio-button name="getPropDetails" on-tap="showPropDetails">Enter property details</paper-radio-button>
-			        <paper-radio-button name="getLoanDetails" on-tap="showLoanDetails">Refinance Existing mortgage loan</paper-radio-button>
+			        <paper-radio-button name="getPropDetails" on-tap="showPropDetails">{{localize('prop.enterProperty')}}</paper-radio-button>
+			        <paper-radio-button name="getLoanDetails" on-tap="showLoanDetails">{{localize('prop.refinanceExisting')}}</paper-radio-button>
 			    </paper-radio-group>
 		    </section>
 		    <section>
 		    	<template is="dom-if" if="[[showPropPage]]" restamp>
-		    		<property-details></property-details>
+		    		<property-details language=[[language]]></property-details>
 		    	</template>
 		    	<template is="dom-if" if="[[showLoanPage]]" restamp>
 		    		<!-- <property-details></property-details> -->
-		    		<loan-details ></loan-details>
+		    		<loan-details language=[[language]]></loan-details>
 		    	</template>
 		    </section>
 		</div>
     </template>
      <script>
-        class PropertySelection extends Polymer.Element {
+        class PropertySelection extends LmGlobal {
 
             static get is() { return 'property-selection'; }
             static get properties() {
@@ -67,7 +68,11 @@
                 		type: Boolean,
                 		notify: true,
                 		reflectToAttribute: true
-                	}
+                	},
+                    language: {
+                        type: String,
+                        value: 'en'
+                    },
                   
                 }
             }
