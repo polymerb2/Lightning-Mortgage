@@ -348,9 +348,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-             <label> Please ensure that the information you update matches with official records. </label>
-             <label>You will be required to submit documents to support the change before the mortgage is processed. </label>
-            <paper-button class="custom dialog-orange" on-click="knockOutCheck" dialog-dismiss>Ok</paper-button>               
+             <label> {{localize('profile.ConfirmText1')}} </label>
+             <label>{{localize('profile.ConfirmText2')}} </label>
+            <paper-button class="custom dialog-orange" on-click="knockOutCheck" dialog-dismiss>
+                {{localize('profile.ok')}}
+              </paper-button>               
           </paper-dialog>
 
         <div class="next_button">

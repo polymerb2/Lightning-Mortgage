@@ -89,10 +89,13 @@
     "profile.Err_Income": "Fill Income(confirmed)",
     "profile.MonthlyExpense": "Monthly Family Expense",
     "profile.Err_MonthlyExpense": "Fill Monthly Family Expense",
-    "profile.MonthlyExpense": "Monthly Family Expense",
+    "profile.IncomeAdditional": "Inkomen Aanvullend",
     "profile.SubmitDeclaration": "I hereby confirm that the information provided above is true and fair to the best of my knowledge and that I authorize ING to contact such agencies as needed to verify the correctness of the information provided",
     "profile.Validate": "Validate",
-    "profile.Cancel": "Cancel"
+    "profile.Cancel": "Cancel",
+    "profile.ConfirmText1": " Please ensure that the information you update matches with official records.",
+    "profile.ConfirmText2": " You will be required to submit documents to support the change before the mortgage is processed.",
+    "profile.Ok": "OK"
   },
   "du": {
     "lightningMortgage": "Bliksem Hypotheek",
@@ -187,6 +190,9 @@
     "profile.IncomeAdditional": "Inkomen Aanvullend",
     "profile.SubmitDeclaration": "Hierbij bevestig ik dat de hierboven vermelde informatie waar en naar mijn beste weten juist en eerlijk is en dat ik toestemming verleen aan ING om dergelijke agentschappen te contacteren als nodig om de juistheid van de verstrekte informatie te verifiëren",
     "profile.Validate": "bevestigen",
-    "profile.Cancel": "Annuleer"
+    "profile.Cancel": "Annuleer",
+    "profile.ConfirmText1": "Zorg ervoor dat de informatie die u bijwerkt bij officiële records.",
+    "profile.ConfirmText2": "U dient documenten in te dienen ter ondersteuning van de wijziging voordat de hypotheek wordt verwerkt.",
+    "profile.Ok": "OK",
   }
 }
