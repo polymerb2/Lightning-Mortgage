@@ -344,8 +344,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-dialog>
                     <div class="center">&nbsp;</div>
                     <div>
-                        <paper-checkbox checked="{{checked
-}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
+                        <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
                          <a href="javascript:void(0);" on-click="openterms">Terms and conditions</a> 
                         <div class="right">
                             <paper-button id="submitbtn" class="paper-button-disabled" disabled$="[[!checked]]" on-click="_submitInfo">Submit</paper-button>
@@ -696,6 +695,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             closedialog() {
                 window.history.pushState({}, null, '/home');
                 window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+            openterms(event) {
+                this.$.dialogeterm.open();
+                this.$.cover.style.display = "block";
+            }
+            closeTerms(event) {
+                this.$.cover.style.display = "none";
             }
 
         }
