@@ -50,7 +50,9 @@
     "progress.propSelection": "Property Selection",
     "progress.offerSelection": "Offer Selection",
     "progress.finalOffer": "Final Offer",
-    "progress.savingDtl": "Saving your Details.."
+    "progress.savingDtl": "Saving your Details..",
+    "progress.save": "Save"
+    
   },
   "du": {
     "lightningMortgage": "Bliksem Hypotheek",
@@ -103,6 +105,7 @@
     "progress.propSelection": "Eigenschapselectie",
     "progress.offerSelection": "Aanbod Selectie",
     "progress.finalOffer": "Laatste bod",
-    "progress.savingDtl": "Uw gegevens opslaan.."
+    "progress.savingDtl": "Uw gegevens opslaan..",
+     "progress.save": "besparen"
   }
 }
