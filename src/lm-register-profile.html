@@ -311,22 +311,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                      such agencies as needed to verify the correctness of the information provided</paper-checkbox>
                  </div>
                  <div id="cover"></div> 
-                <paper-dialog id="validateText" no-cancel-on-outside-click>
+                <paper-dialog id="validateText" no-cancel-on-outside-click entry-animation="scale-up-animation"
+                exit-animation="scale-down-animation">
                     <div on-click="closeDialog">
                         <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
                     </div>
-                   Request call back and Visit nearest branch
-                   In order to understand reject reason and provide necessary documents. 
+                 <p>Request call back and Visit nearest branch</p>
+                 <p>In order to understand reject reason and provide necessary documents.</p>
                    <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>  
                </paper-dialog>
      
                
-                <paper-dialog id="confirmText" no-cancel-on-outside-click>
+                <paper-dialog id="confirmText" no-cancel-on-outside-click entry-animation="scale-up-animation"
+                exit-animation="scale-down-animation">
                   <div on-click="closeDialog">
                       <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
                   </div>
-                  <p> Please ensure that the information you update matches with official records. </p>
-                  <p>You will be required to submit documents to support the change before the mortgage is processed. </p>
+                  <p>Please ensure that the information you update matches with official records.</p>
+                  <p>You will be required to submit documents to support the change before the mortgage is processed.</p>
                   <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>  
                </paper-dialog>
              <div class="next_button">
