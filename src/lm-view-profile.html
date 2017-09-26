@@ -137,9 +137,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               handle-as="json"
               content-type="application/json">
   </iron-ajax>
-    <!-- <span>{{ajaxResponse.responseMessage}}</span> -->
-    <!-- <h1>Profile Details</h1> 
-               last-response='{{ajaxResponse}}'-->
     
     <iron-ajax
       id="saveProfile"
@@ -224,7 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="row">
             <div class="col">  
               <paper-input class="input_width_add"label="Door Number" required auto-validate error-message="Fill Door Number" 
-              value="{{ajaxResponse.address.doorNumber}}"><div class="icon_mandatory" slot="prefix">*</div>
+              value="{{ajaxResponse.address.doorNumber}}">
               </paper-input>
             </div>
             <div class="col">
@@ -235,7 +232,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="row">
             <div class="col">
               <paper-input class="input_width_loc"label="Locality" required auto-validate error-message="Fill Locality" 
-              value="{{ajaxResponse.address.addressLine2}}"><div class="icon_mandatory" slot="prefix">*</div>
+              value="{{ajaxResponse.address.addressLine2}}">
                   <iron-icon icon = "account-circle"  prefix></iron-icon>
                 </paper-input>
             </div>
@@ -340,7 +337,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="next_button">
           <paper-spinner-lite active$="{{loader}}" class="orange active"></paper-spinner-lite>
-          <paper-button toggles raised class = "LM-gray" on-tap="cancel">Cancel</paper-button>
+          <paper-button toggles raised class = "" on-tap="cancel">Cancel</paper-button>
           <!-- <paper-button hidden$="{{hide}}" toggles raised class ="" on-tap="knockOutCheck">Validate</paper-button>       -->
    <paper-button disabled$="{{!checked}}" toggles raised class = "" on-tap="updateProfile">Validate</paper-button> 
         </div>
@@ -466,12 +463,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.lmDialog.open();
       }
       updateProfile(e){
-      if(this.checked)
-       {
-         this.$.saveProfile.generateRequest();
-        this.loader = true;
-        this.$.cover.style.display="block";
+        let Fname = this.ajaxResponse.firstName
+        let Pcode = this.ajaxResponse.address.postCode;
+        let mobile = this.ajaxResponse.mobileNumber;
+       console.log("dssd"+mobile);
+       if((mobile != "") && (Fname != "") && (Pcode != "")){
+         console.log("inside");
+        if(this.checked)
+        {
+          this.$.saveProfile.generateRequest();
+          this.loader = true;
+          this.$.cover.style.display="block";
+        }
        }
+      
+    
 
       }
       closeDialog()
@@ -516,9 +522,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       }
             getCityInfo(){
-              //this.ajaxResponse= this.tempResponse.address.postCode;
-             // this.$;
-              // this.isActive = true;
               let postCode = this.ajaxResponse.address.postCode;
                if(postCode!="undefined" && postCode!="")
                this.postCodeApiUrl = "http://10.138.64.19:8080/lightningmortgage/city/"+postCode;
@@ -539,14 +542,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.ajaxResponse = this.tempResponse;
         this.edit=false;
         this.hide = false;
+        return this.ajaxResponse;
       }
       sub()
       {
-        this.checked= !this.checked;
-        if(this.firstName!=null)
-        {
-          return this.checked;
-        }
+          this.checked= !this.checked;
+        
       }
 
       getUrl() {
@@ -585,7 +586,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.edit=false;
         this.hide = false;
         this.loader = false;
-        var result= data.detail.response 
+        var result= data.detail.response
+        //let fname = this. 
         if(result && result.status ==="200") {
           this.$.confirmText.open();
         }
