@@ -274,22 +274,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="details-container">
                 <div class="center">&nbsp;</div>
                 <div class="slider-header">
-                    <div class="slide-detail">Equated Periodic Installment (EPI) :  <span>&euro; {{_convertToLocale(epi)}}</span></div>
-                    <div class="slide-detail">Effective APR% : <span>{{apr}}</span></div>
-                    <div class="slide-detail">Total Offer Value : <span>&euro;{{_convertToLocale(totaloffervalue)}}</span></div>
+                    <div class="slide-detail">{{localize('product.EPIText')}} (EPI) :  <span>&euro; {{_convertToLocale(epi)}}</span></div>
+                    <div class="slide-detail">{{localize('product.APR')}} : <span>{{apr}}</span></div>
+                    <div class="slide-detail">{{localize('product.TOV')}} : <span>&euro;{{_convertToLocale(totaloffervalue)}}</span></div>
                 </div>
                 <div class="slider-contianer">
-                    <lm-slider title='Tenure' minval='{{termValues.minTerm}}' maxval='{{termValues.maxTerm}}' selected='{{offerterm}}' interval='{{termValues.termStep}}' suffix='Yrs'></lm-slider>
-                    <lm-slider title='Amount' prefix='&euro;' minval='{{amountValues.minAmount}}' selected='{{offeramount}}' interval='{{amountValues.amountStep}}' maxval='{{amountValues.maxAmount}}'></lm-slider>
+                    <lm-slider title={{localize('product.tenure')}} minval='{{termValues.minTerm}}' maxval='{{termValues.maxTerm}}' selected='{{offerterm}}' interval='{{termValues.termStep}}' suffix='Yrs'></lm-slider>
+                    <lm-slider title={{localize('product.amount')}} prefix='&euro;' minval='{{amountValues.minAmount}}' selected='{{offeramount}}' interval='{{amountValues.amountStep}}' maxval='{{amountValues.maxAmount}}'></lm-slider>
 
 
-                    <div class='pad-left'>Down Payment : <span class="mar-left">&euro;{{_convertToLocale(offerdownpayment)}} </span></div>
-                    <div class='pad-left'>Repayment Mode : <span class='mar-left-1'>Monthly </span></div>
+                    <div class='pad-left'>{{localize('product.DownPayment')}} : <span class="mar-left">&euro;{{_convertToLocale(offerdownpayment)}} </span></div>
+                    <div class='pad-left'>{{localize('product.RepaymentMode')}} : <span class='mar-left-1'>{{localize('product.Monthly')}} </span></div>
                 </div>        
                 <div class="center">&nbsp;</div> 
 
                 <div class="vas-icons">
-                    <h3 class="center-text">Would you be interested in amazing deals from our trusted partners?</h3>
+                    <h3 class="center-text">{{localize('product.VASText')}}</h3>
 
                 <vas-service itemindex='{{vasArray}}' on-click='updateOfferAmount'></vas-service>
                 <div class='v-space'></div> 
@@ -300,24 +300,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>
 
                 <div>
-                    <h3>Total Offer Breakup</h3>
+                    <h3>{{localize('product.TOB')}}</h3>
                     <div>
                         <table>
 
                             <tr>
-                                <td><label>Funded by Bank :</label></td>
+                                <td><label>{{localize('product.FBB')}} :</label></td>
                                 <td>&euro;{{_convertToLocale(offeramount)}}</td>
                             </tr>
                             <tr>
-                                <td><label>Funded by applicant :</label></td>
+                                <td><label>{{localize('product.FBA')}} :</label></td>
                                 <td>&euro;{{_convertToLocale(offerdownpayment)}}</td>
                             </tr>
                             <tr>
-                                <td><label>Value Added Services :</label></td>
+                                <td><label>{{localize('product.VAS')}} :</label></td>
                                 <td>&euro;{{_convertToLocale(vasamount)}}</td>
                             </tr>
                             <tr>
-                                <td><label>Total Offer Value : </label></td>
+                                <td><label>{{localize('product.TOV')}}  : </label></td>
                                 <td>&euro;{{_convertToLocale(totaloffervalue)}}</td>
                             </tr>
                         </table>
@@ -338,10 +338,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button >   
                         </div>                     
                         <div>
-                            <span class='error'>Error in saving Offer details. Please try again.</span>
+
+                            <span class='error'>{{localize('product.ErrorSaving')}}</span>
                         </div>
                     </paper-dialog>
-                
                     <div class="center">&nbsp;</div>
                     <div>
                         <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
@@ -417,7 +417,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     <script>
-        class ProductPreference extends Polymer.Element {
+        class ProductPreference extends LmGlobal {
             constructor() {
                 super();
                 this.products = [];
@@ -437,7 +437,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
               //  this.onloadurl = "http://10.138.13.58:8080/lightningmortgage/identifyProduct/123/1012CM/0";
                 this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
-               // this.onloadurl = "src/products.json";
                 this.$.ironAjaxOnload.generateRequest();
             }
             static get is() { return 'product-preference'; }
@@ -696,6 +695,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             closedialog() {
                 window.history.pushState({}, null, '/home');
                 window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+            openterms(event) {
+                this.$.dialogeterm.open();
+                this.$.cover.style.display = "block";
+            }
+            closeTerms(event) {
+                this.$.cover.style.display = "none";
             }
 
         }
