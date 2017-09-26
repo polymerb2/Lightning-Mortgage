@@ -216,23 +216,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <li class$="{{isprofile}}">
                 <span class="bubble"></span>                
                 <img src="./images/tick.png" id='profile' class='hidden' />                   
-                Basic Info
+                {{localize('progress.basicInfo')}}
             </li>
 
             <li class$="{{isproperty}}">
                 <span class="bubble"></span>
                 <img src="./images/tick.png" id='property' class='hidden'/>
-                 Property Selection
+                {{localize('progress.propSelection')}}
             </li>
              <li class$="{{isproduct}}">
                 <span class="bubble"></span>
                 <img  src="./images/tick.png" id='products' class='hidden'/>
-                Offer Selection
+                {{localize('progress.offerSelection')}}
             </li>
             <li>
                 <span class="bubble"></span>
                 <img class="hidden" src="./images/tick.png"/>
-                Final Offer
+                {{localize('progress.finalOffer')}}
 
             </li>
         </ul>
@@ -242,14 +242,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div on-click="closeDialog">
           <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
         </div>
-        <label>Saving your Details..</label>   
+        <label>{{localize('progress.savingDtl')}}</label>   
         <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>             
       </paper-dialog>
 
   </template>
 
   <script>
-    class ProgressStepper extends Polymer.Element {
+    class ProgressStepper extends LmGlobal {
       static get is() { return 'progress-stepper'; }
      static get properties(){
         return {
