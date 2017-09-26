@@ -569,8 +569,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.loader = false;
         var result= data.detail.response 
         if(result && result.responseCode ==="200") {
-        window.history.pushState({}, null, '/property-selection');
-        window.dispatchEvent(new CustomEvent('location-changed'));
+          if(result.responseData.knockoutStatus == true) {
+            window.history.pushState({}, null, '/property-selection');
+            window.dispatchEvent(new CustomEvent('location-changed'));
+          }else {
+            this.$.validateText.open();
+          }
+       
         }
         else{
           this.$.validateText.open();
