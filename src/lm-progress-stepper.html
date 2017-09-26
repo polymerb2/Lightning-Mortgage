@@ -10,9 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="rm-progress">
+<dom-module id="progress-stepper">
   <template>
     <style include="shared-styles">
       :host {
@@ -195,24 +196,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        
         <ul class="progress-indicator">
 
-            <li class="completed">
-                <span class="bubble"></span>
-                <img src="./images/tick.png"/>
-                Basic Information
+            <li class$="{{isprofile}}">
+                <span class="bubble"></span>                
+                <img src="./images/tick.png" id='profile' class='hidden' />                   
+                Basic Info
             </li>
 
-            <li class="completed">
+            <li class$="{{isproperty}}">
                 <span class="bubble"></span>
-                <img src="./images/tick.png"/>
-                Property Selection
+                <img src="./images/tick.png" id='property' class='hidden'/>
+                 Property Selection
             </li>
-            <li class="completed">
+             <li class$="{{isproduct}}">
                 <span class="bubble"></span>
-                <img class="hidden" src="./images/tick.png"/>
+                <img  src="./images/tick.png" id='products' class='hidden'/>
                 Offer Selection
-
             </li>
-            <li class="">
+            <li>
                 <span class="bubble"></span>
                 <img class="hidden" src="./images/tick.png"/>
                 Final Offer
@@ -220,25 +220,73 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </li>
         </ul>
     </div>
-        <div class="btn-bar">
-          <button>Save</button>
-        </div>
+    <div class="btn-bar">
+      <button>Save</button>
+    </div>
   </template>
 
   <script>
-    class RmProgress extends Polymer.Element {
-      static get is() { return 'rm-progress'; }
+    class ProgressStepper extends Polymer.Element {
+      static get is() { return 'progress-stepper'; }
      static get properties(){
         return {
+          page:{
+          type:String,
+          value:'',
+          reflectToAttribute:true,
+          notify:true,
+          observer:'_updateProgress'
+          },
           stepsCounter : {
             type :Array,
             value:[1,2,3,4]
+          },
+          isprofile:{
+            type: Boolean,
+            value:true,
+            reflectToAttribute:true,
+            notify:true,
+
+          },
+          isproperty:{
+            type: Boolean,
+            value:false,
+            reflectToAttribute:true,
+            notify:true,
+          },
+          isproduct:{
+            type: Boolean,
+            value:false,
+            reflectToAttribute:true,
+            notify:true,
           }
         }
       }
+      _updateProgress(){
+        switch(this.page){
+          case 'view-profile':
+          this.isprofile = 'completed';
+          break; 
+          case 'property-selection': 
+          this.isproperty = 'completed';
+          this.isprofile = 'completed';
+          this.$.profile.className='';          
+            break; 
+
+          case 'products': 
+          this.isproduct = 'completed';
+          this.isproperty = 'completed';
+          this.isprofile = 'completed';
+          this.$.profile.className='';
+          this.$.property.className='';        
+          break; 
+        }
+      }
+
+
     }
 
-    window.customElements.define(RmProgress.is, RmProgress);
+    window.customElements.define(ProgressStepper.is, ProgressStepper);
   </script>
 </dom-module>
 

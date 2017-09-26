@@ -12,9 +12,10 @@
             }
             .prop-details{
                 width: 980px;
-                margin: 100px auto 0;
+                margin: 0px auto 50px;
                 overflow: hidden;
                 position: relative;
+                clear: both;
               //border: 2px solid #F60;
             } 
             .prop-details h3{
@@ -30,10 +31,11 @@
             }
 
         </style>
+
         <div class="prop-details card">
          <h3>Do you want mortgage on a new property or refinance an existing mortgage?</h3>
         	<section  class="propSelection">        		
-				<paper-radio-group id="propSelection">
+				<paper-radio-group id="propSelection" selected="getPropDetails">
 			        <paper-radio-button name="getPropDetails" on-click="showPropDetails">Enter property details</paper-radio-button>
 			        <paper-radio-button name="getLoanDetails" on-click="showLoanDetails">Refinance Existing mortgage loan</paper-radio-button>
 			    </paper-radio-group>
@@ -58,6 +60,7 @@
                 	showPropPage: {
                 		type: Boolean,
                 		notify: true,
+                		value: true,
                 		reflectToAttribute: true
                 	},
                 	showLoanPage: {
