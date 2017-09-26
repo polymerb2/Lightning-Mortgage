@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 @license
 Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -85,19 +85,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-dropdown-menu.Marital_Status{width:65%;margin-top: -7px;}
         paper-dropdown-menu.dependents{width:65%;margin-top:-7px;}
         paper-dropdown-menu.mob_code{width:17%;padding-right: 3px}
-		    :host paper-input[disabled] {
-        --paper-input-container-input-color: #afafaf;
+		    :host paper-input[disabled] {
+        --paper-input-container-input-color: #afafaf;
         --paper-input-container-label:{border:1px solid red;};
         --paper-input-container-disabled: {
-        opacity: 0.7;
+        opacity: 0.7;
 
         }
         }
-        :host paper-dropdown-menu[disabled] {
-        --paper-input-container-input-color: #afafaf;
+        :host paper-dropdown-menu[disabled] {
+        --paper-input-container-input-color: #afafaf;
         --paper-input-container-disabled: {
 
-        opacity: 0.7;
+        opacity: 0.7;
 
         }
         } 
@@ -320,8 +320,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-              <label>Request call back and Visit nearest branch.</label>
-              <label>order to understand reject reason and provide necessary documents.</label>
+              <h2>Knock Out Check Failed</h2>
+              <label>Please choose the two options below to proceed further</label>
+              <ul>
+                <li><label><a href="">Request call back</a></label></li>
+                <li><label>Visit nearest branch in order to understand reject reason and provide necessary documents.</label></li>
+              </ul>
+              
               <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>               
           </paper-dialog>
 
