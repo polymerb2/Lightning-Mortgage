@@ -27,6 +27,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"> 
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-down-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
 
 <dom-module id="lm-view-profile">
   <template>
@@ -103,13 +107,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           top: 290px;
           left: 600px;
         }
+        paper-dialog {
+          border: 2px solid #777777;
+          border-radius: 5px;
+          padding: 1%;
+          width: 40%;
+          height: auto;
+          font-size: 15px;
+        }
         #cover{position: fixed;top:0;left:0;background: rgba(0,0,0,0.6);z-index: 5;width:100%;height: 100%;display: none;}
  
           .mob_code {width: 22%; float: left;}
           .mobile_number {padding: 1px 0 0 0;}
           .declaration_text{margin:30px 0px 8px;font-size:14px;}
-          paper-spinner-lite.active{position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);}
-            
+          paper-spinner-lite.active{position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);} 
     </style>
 	
     <iron-ajax
@@ -149,7 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="row Salutation_detail"> 
           <div class="col"> 
                 <paper-dropdown-menu class="salutation" label="Salutation" value="{{ajaxResponse.salutation}}" >
-                    <paper-listbox  selected="{{ajaxResponse.salutation}}" slot = "dropdown-content" class="val_dropdown">
+                    <paper-listbox  selected="{{selectedSalutaion}}" slot = "dropdown-content" class="val_dropdown">
                       <paper-item value="Mr.">Mr.</paper-item>
                       <paper-item value="Mrs.">Mrs.</paper-item>
                     </paper-listbox>
@@ -176,7 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 class="Marital_Status" label="Marital Status"  value="{{ajaxResponse.maritalStatus}}" 
                  required auto-validate>
                  <div class="icon_mandatory" slot="prefix">*</div>
-                  <paper-listbox  selected="{{ajaxResponse.maritalStatus}}" slot = "dropdown-content" class="val_dropdown">
+                  <paper-listbox  selected="{{selectedMaritalStatus}}" slot = "dropdown-content" class="val_dropdown">
                       <paper-item value="Single">Single</paper-item>
                       <paper-item value="Married">Married</paper-item>
                       <paper-item value="Divorced">Divorced</paper-item>
@@ -251,7 +262,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <div class="col mob_number">
                   <div class="mob_code">
                     <paper-dropdown-menu class="men_btn" label="Code"  value="{{ajaxResponse.mobileCode}}">
-                        <paper-listbox selected="{{ajaxResponse.mobileCode}}" slot = "dropdown-content" >
+                        <paper-listbox selected="{{selectedmobileCode}}" slot = "dropdown-content" >
                           <paper-item value="+31">+31</paper-item>
                           <paper-item value="+91">+91</paper-item>
                         </paper-listbox>
@@ -304,22 +315,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
         <div id="cover"></div>    
         
-          <paper-dialog id="validateText" no-cancel-on-outside-click>
+          <paper-dialog id="validateText" no-cancel-on-outside-click entry-animation="scale-up-animation"
+          exit-animation="scale-down-animation">
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-              <p>Request call back and Visit nearest branch
-              In order to understand reject reason and provide necessary documents. </p>
+              <label>Request call back and Visit nearest branch.</label>
+              <label>order to understand reject reason and provide necessary documents.</label>
               <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>               
           </paper-dialog>
 
-          <paper-dialog id="confirmText" no-cancel-on-outside-click>
-              <!-- entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop> -->
+          <paper-dialog id="confirmText" no-cancel-on-outside-click entry-animation="scale-up-animation"
+          exit-animation="scale-down-animation">
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-             <p> Please ensure that the information you update matches with official records. </p>
-             <p>You will be required to submit documents to support the change before the mortgage is processed. </p>
+             <label> Please ensure that the information you update matches with official records. </label>
+             <label>You will be required to submit documents to support the change before the mortgage is processed. </label>
             <paper-button class="custom dialog-orange" on-click="knockOutCheck" dialog-dismiss>Ok</paper-button>               
           </paper-dialog>
 
@@ -340,7 +352,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class ViewProfile extends Polymer.Element {
+    class ViewProfile extends LmGlobal {
       static get is() { return 'lm-view-profile'; }
       static get properties() {
         return {
@@ -360,9 +372,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: String,
             value: "Andrew"
           },
-          salutation:{
+          selectedSalutaion:{
             type:String,
-            value:"Mr."
+            value:"3"
           },
           bSN:{
             type:String,
@@ -390,17 +402,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type:String,
             value:"Amsterdam"
           },
-          mobileNumber:{
+          selectedmobileCode:{
             type:String,
-            value:"9015291725"
+            value:"4"
           },
           emailAddress:{
             type:String,
             value:"abc@gmail.com"
           },
-          maritalStatus:{
+          selectedMaritalStatus:{
             type:String,
-            value:"Single"
+            value:"3"
           },
           noOfDependents:
           {
@@ -486,6 +498,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        
           this.ajaxResponse = data.detail.response ;
           this.tempResponse  = JSON.parse(JSON.stringify(data.detail.response));
+          if(this.ajaxResponse) {
+            if(this.ajaxResponse && this.ajaxResponse.salutation=='Mr.') {
+              this.selectedSalutaion = "0";
+            }else if(this.ajaxResponse && this.ajaxResponse.salutation=='Mrs.') {
+              this.selectedSalutaion = "1";
+            }
+            if(this.ajaxResponse && this.ajaxResponse.maritalStatus=='Single') {
+              this.selectedMaritalStatus = "0";
+            }else if(this.ajaxResponse && this.ajaxResponse.maritalStatus=='Married') {
+              this.selectedMaritalStatus = "1";
+            }else if(this.ajaxResponse && this.ajaxResponse.maritalStatus=='Divorced') {
+              this.selectedMaritalStatus = "2";
+            }
+            if(this.ajaxResponse && this.ajaxResponse.mobileCode=='+31.') {
+              this.selectedmobileCode = "0";
+            }else if(this.ajaxResponse && this.ajaxResponse.mobileCode=='+91') {
+              this.selectedmobileCode = "1";
+            }
+          }
           
          // this.tempResponse = data.detail.response;
         

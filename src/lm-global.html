@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html" />
+<dom-module id="lm-global">
+    <script>
+        class LmGlobal extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
+            constructor() {
+                super();
+            }
+            static get is() {
+                return 'lm-global';
+            }
+            static get properties() {
+                return {
+                    language: {
+                        type: String,
+                        value: 'en'
+                    },
+                    api: {
+                        type: String,
+                        value: "http://10.138.64.19:8080/"
+                    }
+                }
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                this.loadResources(this.resolveUrl('locales.json'));
+            }
+        }
+        window.customElements.define(LmGlobal.is, LmGlobal);
+    </script>
+</dom-module>
