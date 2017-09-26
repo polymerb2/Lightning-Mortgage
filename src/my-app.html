@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="lm-global.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -44,24 +45,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="my-app">
   <template>
     <style include="shared-styles">
-      :host {
+       :host {
         --app-primary-color: #4285f4;
         --app-secondary-color: black;
         display: block;
       }
+
+      #langSelector {
+        z-index: 9999;
+        position: absolute;
+        right: 30px;
+        top: 22px;
+      }
+
+      #langSelector a {
+        color: #fff;
+        text-decoration: none
+      }
+
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
       }
+
       app-header {
         color: #fff;
         background-color: var(--app-primary-color);
       }
+
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
+
       .drawer-list {
         margin: 0 20px;
       }
+
       .drawer-list a {
         display: block;
         padding: 0 16px;
@@ -69,6 +87,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-secondary-color);
         line-height: 40px;
       }
+
       .drawer-list a.iron-selected {
         color: black;
         font-weight: bold;
@@ -79,39 +98,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <app-location
-        route="{{route}}"
-        url-space-regex="^[[rootPath]]">
+    <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
     </app-location>
 
-    <app-route
-        route="{{route}}"
-        pattern="[[rootPath]]:page"
-        data="{{routeData}}"
-        tail="{{subroute}}">
+    <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
     </app-route>
-    <app-route
-      route="{{subroute}}"
-      pattern="/:id"
-      data="{{subrouteData}}">
+    <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
     </app-route>
 
+    <div id="langSelector"><a href="#" on-click="langChangeEn">En</a> | <a href="#" on-click="langChangeDu">Du</a></div>
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
       <!-- <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
         <!-- <app-toolbar>Menu</app-toolbar> -->
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <!-- <a name="login" href="[[rootPath]]login">Login</a>
+      <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+        <!-- <a name="login" href="[[rootPath]]login">Login</a>
           <a name="view1" href="[[rootPath]]view1">View One</a>
           <a name="view2" href="[[rootPath]]view2">View Two</a>
           <a name="view3" href="[[rootPath]]view3">View Three</a>
           <a name="profile-status" href="[[rootPath]]profile-status">Profile Status</a>
-          <a name="view-profile" href="[[rootPath]]view-profile">View Profile</a> 
+          <a name="view-profile" href="[[rootPath]]view-profile">View Profile</a>
         </iron-selector>
       </app-drawer> -->
 
-      <!-- Main content -->
-      <!-- <app-header-layout has-scrolling-region> -->
+        <!-- Main content -->
+        <!-- <app-header-layout has-scrolling-region> -->
 
         <!-- <app-header slot="header" condenses reveals effects="waterfall">
           <app-toolbar>
@@ -119,7 +130,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div main-title>Lightning Mortgage System</div>
           </app-toolbar>
         </app-header> -->
-        <rm-header page='{{page}}'></rm-header>
+
+
+        <rm-header page='{{page}}' language=[[language]]></rm-header>
+
         <div class="progress">
             <progress-stepper page='{{page}}' ></progress-stepper>
         </div>
@@ -128,31 +142,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          
+            <lm-login language=[[language]] name="login"></lm-login>
           <lm-profile-status name="profile-status"></lm-profile-status>
-          <lm-login name="login"></lm-login>
           <lm-view-profile name="view-profile"></lm-view-profile>
           <lm-register-profile name="register-profile"></lm-register-profile>
           <property-selection name="property-selection"></property-selection>
           <product-preference name="products"></product-preference>
             <lm-home name="home"></lm-home>
 
-          
+
           <my-view404 name="view404"></my-view404>
         </iron-pages>
-        <rm-footer></rm-footer>
-      <!-- </app-header-layout> -->
+        <rm-footer language=[[language]]></rm-footer>
+        <!-- </app-header-layout> -->
     </app-drawer-layout>
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class MyApp extends LmGlobal {
       static get is() { return 'my-app'; }
       static get properties() {
         return {
+          language: {
+            value: "en"
+          },
           page: {
             type: String,
             reflectToAttribute: true,
@@ -170,6 +183,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           '_routePageChanged(routeData.page)',
         ];
       }
+      langChangeEn() { this.language = 'en' }
+      langChangeDu() { this.language = 'du' }
       _routePageChanged(page) {
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
@@ -186,7 +201,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('lm-'+page + '.html');
+        var resolvedPageUrl = this.resolveUrl('lm-' + page + '.html');
         Polymer.importHref(
             resolvedPageUrl,
             null,
