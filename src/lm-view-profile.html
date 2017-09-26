@@ -330,9 +330,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-spinner-lite active$="{{loader}}" class="orange active"></paper-spinner-lite>
           <paper-button toggles raised class = "LM-gray" on-tap="cancel">Cancel</paper-button>
           <!-- <paper-button hidden$="{{hide}}" toggles raised class ="" on-tap="knockOutCheck">Validate</paper-button>       -->
-          <paper-button disabled$="{{!checked}}" toggles raised class = "" on-tap="updateProfile">Validate</paper-button>
-           <!-- <paper-button toggles raised hidden="{{hide}}" on-click="eventClick" class = "">Edit Profile</paper-button>  -->
-
+   <paper-button disabled$="{{!checked}}" toggles raised class = "" on-tap="updateProfile">Validate</paper-button> 
         </div>
     </div>
   </form>
@@ -455,15 +453,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.hide=true;
         this.$.lmDialog.open();
       }
-
       updateProfile(e){
-        // e.stopPropagation(); 
-        // return false;
- 
-
-        this.$.saveProfile.generateRequest();
+      if(this.checked)
+       {
+         this.$.saveProfile.generateRequest();
         this.loader = true;
         this.$.cover.style.display="block";
+       }
+
       }
       closeDialog()
       {
@@ -473,7 +470,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       saveProfile(){
         this.edit=false;
         this.hide = false;
-        return this.ajaxResponse;
+        if(this.checked)
+        {
+          return this.ajaxResponse;
+        }
+        
       }
       handleResponse(data) {
        
