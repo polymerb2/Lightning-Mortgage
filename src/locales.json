@@ -3,12 +3,20 @@
         "lightningMortgage": "Lightning Mortgage",
         "login": "Login",
         "username": "Username",
+        "usernameError": "Please enter username",
+        "password": "Password",
+        "passwordError": "Please input password",
+        "register": "Register",
         "footerContent": "All rights reserved to"
     },
     "du": {
-        "lightningMortgage": "bliksem hypotheek",
-        "login": "Login",
+        "lightningMortgage": "Bliksem Hypotheek",
+        "login": "Inloggen",
         "username": "Gebruikersnaam",
+        "usernameError": "Vul alstublieft gebruikersnaam in",
+        "password": "Wachtwoord",
+        "passwordError": "Vul alstublieft uw wachtwoord in",
+        "register": "Registreren",
         "footerContent": "Alle rechten voorbehouden aan"
     }
 }
