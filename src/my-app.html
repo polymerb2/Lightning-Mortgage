@@ -106,7 +106,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
     </app-route>
 
-    <div id="langSelector"><a href="#" on-click="langChangeEn">En</a> | <a href="#" on-click="langChangeDu">Du</a></div>
+    <div id="langSelector"><a href="javascript:void(0);" on-click="langChangeEn">En</a> | <a href="javascript:void(0);" on-click="langChangeDu">Du</a></div>
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
       <!-- <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
@@ -142,8 +142,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             role="main">
             <lm-login language=[[language]] name="login"></lm-login>
           <lm-profile-status name="profile-status"></lm-profile-status>
-          <lm-view-profile name="view-profile"></lm-view-profile>
-          <lm-register-profile name="register-profile"></lm-register-profile>
+          <lm-view-profile language=[[language]] name="view-profile"></lm-view-profile>
+          <lm-register-profile language=[[language]] name="register-profile"></lm-register-profile>
           <property-selection name="property-selection"></property-selection>
           <product-preference name="products"></product-preference>
             <lm-home name="home"></lm-home>
