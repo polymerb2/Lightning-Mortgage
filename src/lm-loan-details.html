@@ -66,7 +66,7 @@
           <div id="cover"></div>
           <section>
             <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite>
-            <paper-dropdown-menu label="Current Lender"  id="id" name="bank">
+            <paper-dropdown-menu label="{{localize('prop.currentLender')}}"  id="id" name="bank">
               <paper-listbox slot="dropdown-content" on-iron-select="itemSelected">
                 <paper-item value="aegon">AEGON</paper-item>
                 <paper-item value="abnamrobank">ABN AMRO Bank</paper-item>
@@ -74,18 +74,18 @@
                 <paper-item value="asr">ASR</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
-            <paper-input name="mortgageContractNumber"  class="" label="Mortgage Contract Number" id="mortgageContractNumber" value="{{loandetails.mortgageContractNumber::input}}" on-blur="getOutstandingAmount"></paper-input>
-            <paper-input name="OutstandingBal" readonly class="" label="Current Outstanding Balance" id="outstandingBal" value="{{loandetails.outstandingBal::input}}">
+            <paper-input name="mortgageContractNumber"  class="" label="{{localize('prop.mortgageContractNumber')}}" id="mortgageContractNumber" value="{{loandetails.mortgageContractNumber::input}}" on-blur="getOutstandingAmount"></paper-input>
+            <paper-input name="OutstandingBal" readonly class="" label="{{localize('prop.currentOutstandingBalance')}}" id="outstandingBal" value="{{loandetails.outstandingBal::input}}">
               <iron-icon icon="euro-symbol" slot="prefix"></iron-icon>
             </paper-input>
             
             <br/>
-            <paper-button id="btnSubmit" raised class="custom orange" on-click="submitDetails">Submit</paper-button>
+            <paper-button id="btnSubmit" raised class="custom orange" on-click="submitDetails">{{localize('prop.propertySubmit')}}</paper-button>
             <paper-dialog id="dialogBox" no-cancel-on-outside-click>
               <div on-click="closeDialog">
                 <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-                <label>Please provide Current lender and Mortgage contract number</label>      
+                <label>{{localize('prop.provideClMortageMsg')}}</label>      
                 <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>         
             </paper-dialog>
 
@@ -93,7 +93,7 @@
               <div on-click="closeDialog">
                 <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-                <label>Invalid Current lender or Mortgage contract number</label>  
+                <label>{{localize('prop.invalidClMortageMsg')}}</label>  
                 <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>             
             </paper-dialog>
 
@@ -103,7 +103,7 @@
         </div>
       </template>
       <script>
-        class LoanDetails extends Polymer.Element {
+        class LoanDetails extends LmGlobal {
 
             static get is() { return 'loan-details'; }
             static get properties() {

@@ -7,7 +7,25 @@
         "password": "Password",
         "passwordError": "Please input password",
         "register": "Register",
-        "footerContent": "All rights reserved to"
+        "footerContent": "All rights reserved to",
+        "prop.selectPropertyQuestion": "Do you want mortgage on a new property or refinance an existing mortgage?",
+        "prop.enterProperty": "Enter property details",
+        "prop.refinanceExisting": "Refinance Existing mortgage loan",
+        "prop.doorNumberLabel": "Door Number",
+        "prop.address1Label": "Address Line 1",
+        "prop.address2Label": "Address Line 2",
+        "prop.postalCodeLabel": "Postcode",
+        "prop.cityLabel": "City",
+        "prop.postCodeErrorMsg":"Post code required",
+        "prop.enterPostCodeMsg": "Please enter the post code",
+        "prop.invalidPostCodeMsg": "Invalid post code",
+        "prop.invalidPcUserMsg": "Invalid User or Post code",
+        "prop.currentLender": "Current Lender",
+        "prop.mortgageContractNumber": "Mortgage Contract Number",
+        "prop.currentOutstandingBalance": "Current Outstanding Balance",
+        "prop.propertySubmit": "Submit",
+        "prop.provideClMortageMsg": "Please provide Current lender and Mortgage contract number",
+        "prop.invalidClMortageMsg": "Invalid Current lender or Mortgage contract number"
     },
     "du": {
         "lightningMortgage": "Bliksem Hypotheek",
@@ -17,6 +35,25 @@
         "password": "Wachtwoord",
         "passwordError": "Vul alstublieft uw wachtwoord in",
         "register": "Registreren",
-        "footerContent": "Alle rechten voorbehouden aan"
+        "footerContent": "Alle rechten voorbehouden aan",
+        "prop.selectPropertyQuestion": "Wilt u hypotheek op een nieuw onroerend goed of een bestaande hypotheek herfinancieren?",
+        "prop.enterProperty": "Voer eigendomsgegevens in",
+        "prop.refinanceExisting": "Herfinancieren Bestaande hypothecaire lening",
+        "prop.doorNumberLabel": "Deurnummer",
+        "prop.address1Label": "Adres regel 1",
+        "prop.address2Label": "Adres regel 2",
+        "prop.postalCodeLabel": "Postcode",
+        "prop.cityLabel": "stad",
+        "prop.postCodeErrorMsg":"Postcode verplicht",
+        "prop.enterPostCodeMsg": "Vul alstublieft de postcode in",
+        "prop.invalidPostCodeMsg": "Ongeldige postcode",
+        "prop.invalidPcUserMsg": "Ongeldige gebruiker of postcode",
+        "prop.currentLender": "Huidige Uitlener",
+        "prop.mortgageContractNumber": "Hypotheekcontractnummer",
+        "prop.currentOutstandingBalance": "Huidige uitstaande saldo",
+        "prop.propertySubmit": "voorleggen",
+        "prop.provideClMortageMsg": "Gelieve het huidige nummer van de kredietverstrekker en het hypotheekcontract te geven",
+        "prop.invalidClMortageMsg": "Ongeldige huidige kredietverlener of hypotheekcontractnummer"
+
     }
 }
