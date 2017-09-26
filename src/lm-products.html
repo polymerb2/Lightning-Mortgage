@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
 
 <dom-module id="product-preference">
 
@@ -236,23 +237,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     position: relative;
                     top: 13px;
             }
+            paper-spinner-lite {
+            --paper-spinner-color: #FF6600;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+          }
 
         </style>
 
         <div class="productContainer card">
             <div class="flex-container">
-                <template is="dom-repeat" items="[[products.product]]">
+                <template is="dom-repeat" items="[[productreverse]]">
                     <paper-card id='paper_card_{{index}}' heading="[[item.productName]]" class="white flex-item" class$="{{getSelectedClass(index)}}">
                         <div class="card-content">
                         </div>
                     </paper-card>
                 </template>
             </div>
-
+           
             <div class="details-container">
                 <div class="center">&nbsp;</div>
                 <div class="slider-header">
-                    <div class="slide-detail">Equated Periodic Installment(EPI) :  <span>&euro; {{_convertToLocale(epi)}}</span></div>
+                    <div class="slide-detail">Equated Periodic Installment (EPI) :  <span>&euro; {{_convertToLocale(epi)}}</span></div>
                     <div class="slide-detail">Effective APR% : <span>{{apr}}</span></div>
                     <div class="slide-detail">Total Offer Value : <span>&euro;{{_convertToLocale(totaloffervalue)}}</span></div>
                 </div>
@@ -299,13 +306,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         </table>
 
                     </div>
-
+                    <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite>
                     <paper-dialog id="dialogeterm" no-cancel-on-outside-click entry-animation="scale-up-animation"
                 exit-animation="scale-down-animation" >
                         <div>
                             <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss on-click='closeTerms'></paper-icon-button>
                         </div>
                         <term-conditions terms="[[termsArray]]"></term-conditions>
+                    </paper-dialog>
+
+                    <paper-dialog id="dialogeerror" no-cancel-on-outside-click entry-animation="scale-up-animation"
+                                  exit-animation="scale-down-animation">
+                        <div>
+                            <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss on-click='closeerror'></paper-icon-button>
+                        </div>
+                        <label>Data submission failed!! Try Again Later</label>
                     </paper-dialog>
                 
                     <div class="center">&nbsp;</div>
@@ -442,11 +457,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     },
                     epi: {
                         type: String,
-                        value: "392"
+                        value: "0"
                     },
                     apr: {
                         type: String,
-                        value: "2.4"
+                        value: "0"
                     },
                     postBody: {
                         type: Object,
@@ -511,7 +526,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _amountChanged(newValue, oldValue) {
                 if (oldValue !== undefined) {
                     this.updateEPI_APR(this.productDetails, this.offerterm, this.offeramount);
-
+                    this.offerdownpayment = newValue * 0.1;
                 }
             }
             _termChanged(newValue, oldValue) {
@@ -530,23 +545,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             _submitInfo() {
                 this.datasubmitted = true;
                 console.log("clicked submit");
-                this.postBody.customerId = 111;
-                this.postBody.epi = this.epi;
-                this.postBody.offerTerm = this.offerterm;
-                this.postBody.offerValue = this.offeramount;
-                this.postBody.downPayment = 20000;
-                this.postBody.annualPercentageRate = 2.3;
+                let postobj = {};
+                postobj.customerId = 111;
+                postobj.epi = this.epi;
+                postobj.offerTerm = this.offerterm;
+                postobj.offerValue = this.offeramount;
+                postobj.downPayment = 20000;
+                postobj.annualPercentageRate = 2.3;
+
+                this.postBody = postobj;
+                //this.postBody.customerId = 111;
+                //this.postBody.epi = this.epi;
+                //this.postBody.offerTerm = this.offerterm;
+                //this.postBody.offerValue = this.offeramount;
+                //this.postBody.downPayment = 20000;
+                //this.postBody.annualPercentageRate = 2.3;
+                console.log(this.postBody);
                 this.$.ironAjaxSubmit.generateRequest();
-                this.$.checkboxterm.disabled = true;
-                this.$.submitbtn.disabled = true;
-                this.$.submitbtn.classList.add('paper-button-disabled');
-                this.$.submitbtn.classList.remove('paper-button');
-                this.$.dialoge.open();
-                this.$.cover.style.display = "block";
+                this.isActive = true;
+                //this.$.checkboxterm.disabled = true;
+                //this.$.submitbtn.disabled = true;
+                //this.$.submitbtn.classList.add('paper-button-disabled');
+                //this.$.submitbtn.classList.remove('paper-button');
+                //this.$.dialoge.open();
+                //this.$.cover.style.display = "block";
             }
             sendResponse(data) {
-                if (data && data.status === "200") {
-                    this.datasubmitted = true
+                this.isActive = false;
+                if (data.detail.response) {
+                    this.$.checkboxterm.disabled = true;
+                    this.$.submitbtn.disabled = true;
+                    this.datasubmitted = true;
+                    this.$.submitbtn.classList.add('paper-button-disabled');
+                    this.$.submitbtn.classList.remove('paper-button');
+                    this.$.dialoge.open();
+                    this.$.cover.style.display = "block";
+                }
+                else {
+                    console.log('Data subbmition failed');
+                    openerror();
                 }
             }
             setTermMinMaxStep(data) {
@@ -597,6 +634,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //getAPI
             _handleResponseForProducts(data) {
                 this.products = data.detail.response;
+                this.productreverse = this.products.product.reverse();
                 this.productDetails = this.products.offer;
                 this.productIndex = 0;
                 this.productObject = this.products.product[this.productIndex];
@@ -611,7 +649,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     // this.offerdownpayment=10000;
                     this.epi = this.productDetails[this.productDetails.length - 1].epi;
                     this.apr = this.productDetails[0].annualPercentageRate;
-                    this.offerdownpayment = this.productDetails[0].minDownpayment;
+                    this.offerdownpayment = this.offeramount * 0.1;//this.productDetails[this.productDetails.length-1].minDownpayment;
                     this.totaloffervalue = this.offeramount + this.offerdownpayment;
                     this.currentDate = "22 Sep 2017";
                     var today = new Date();
@@ -619,7 +657,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     var monthd = today.getMonth() + 1;
                     var years = today.getFullYear();
                     this.currentDate = dated + "-" + monthd + "-" + years;
-                    this.checked=false;
+                    this.checked = false;
+                    this.isActive = false;
 
 
                 }
@@ -646,6 +685,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.$.cover.style.display = "block";
             }
             closeTerms(event){
+                this.$.cover.style.display = "none";
+            }
+
+            openerror(event) {
+                this.$.dialogeerror.open();
+                this.$.cover.style.display = "block";
+            }
+            closeerror(event) {
                 this.$.cover.style.display = "none";
             }
 
