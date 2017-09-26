@@ -250,6 +250,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .v-space{
             height: 15px;
             }
+             .error{
+                color: #F00;
+                
+            }
+            #errorDialoge{
+                width: 30%;
+            }
 
 
         </style>
@@ -331,7 +338,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button >   
                         </div>                     
                         <div>
-                            <h2 class='error'>Error in saving Offer details. Please try again.</h2>
+                            <span class='error'>Error in saving Offer details. Please try again.</span>
                         </div>
                     </paper-dialog>
                 
@@ -429,8 +436,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     balance = 0;
                 }
               //  this.onloadurl = "http://10.138.13.58:8080/lightningmortgage/identifyProduct/123/1012CM/0";
-               // this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
-                this.onloadurl = "src/products.json";
+                this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
+               // this.onloadurl = "src/products.json";
                 this.$.ironAjaxOnload.generateRequest();
             }
             static get is() { return 'product-preference'; }

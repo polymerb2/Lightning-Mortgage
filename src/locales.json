@@ -25,7 +25,12 @@
         "prop.currentOutstandingBalance": "Current Outstanding Balance",
         "prop.propertySubmit": "Submit",
         "prop.provideClMortageMsg": "Please provide Current lender and Mortgage contract number",
-        "prop.invalidClMortageMsg": "Invalid Current lender or Mortgage contract number"
+        "prop.invalidClMortageMsg": "Invalid Current lender or Mortgage contract number",
+        "progress.basicInfo": "Basic Info",
+        "progress.propSelection": "Property Selection",
+        "progress.offerSelection": "Offer Selection",
+        "progress.finalOffer": "Final Offer",
+        "progress.savingDtl": "Saving your Details.."
     },
     "du": {
         "lightningMortgage": "Bliksem Hypotheek",
@@ -53,7 +58,11 @@
         "prop.currentOutstandingBalance": "Huidige uitstaande saldo",
         "prop.propertySubmit": "voorleggen",
         "prop.provideClMortageMsg": "Gelieve het huidige nummer van de kredietverstrekker en het hypotheekcontract te geven",
-        "prop.invalidClMortageMsg": "Ongeldige huidige kredietverlener of hypotheekcontractnummer"
-
+        "prop.invalidClMortageMsg": "Ongeldige huidige kredietverlener of hypotheekcontractnummer",
+        "progress.basicInfo": "Basis informatie",
+        "progress.propSelection": "Eigenschapselectie",
+        "progress.offerSelection": "Aanbod Selectie",
+        "progress.finalOffer": "Laatste bod",
+        "progress.savingDtl": "Uw gegevens opslaan.."
     }
 }
