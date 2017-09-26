@@ -1,8 +1,8 @@
 {
   "name": "Lightning Mortgage",
-  "short_name": "Lightning Mortgage",
+  "short_name": "LMS",
   "description": "Lightning Mortgage",
-  "start_url": "./?homescreen=1",
+  "start_url": "index.html",
   "display": "standalone",
   "theme_color": "#f60",
   "background_color": "#3f51b5",
