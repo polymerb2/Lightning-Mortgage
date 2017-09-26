@@ -250,6 +250,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             .v-space{
             height: 15px;
             }
+             .error{
+                color: #F00;
+                
+            }
+            #errorDialoge{
+                width: 30%;
+            }
 
 
         </style>
@@ -331,13 +338,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button >   
                         </div>                     
                         <div>
-                            <h2 class='error'>{{localize('product.ErrorSaving')}}</h2>
+
+                            <span class='error'>{{localize('product.ErrorSaving')}}</span>
                         </div>
                     </paper-dialog>
-                
                     <div class="center">&nbsp;</div>
                     <div>
-                        <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
+                        <paper-checkbox checked="{{checked
+}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
                          <a href="javascript:void(0);" on-click="openterms">Terms and conditions</a> 
                         <div class="right">
                             <paper-button id="submitbtn" class="paper-button-disabled" disabled$="[[!checked]]" on-click="_submitInfo">Submit</paper-button>
@@ -430,7 +438,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }
               //  this.onloadurl = "http://10.138.13.58:8080/lightningmortgage/identifyProduct/123/1012CM/0";
                 this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
-              //  this.onloadurl = "src/products.json";
                 this.$.ironAjaxOnload.generateRequest();
             }
             static get is() { return 'product-preference'; }

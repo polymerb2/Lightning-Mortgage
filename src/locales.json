@@ -26,7 +26,6 @@
     "prop.propertySubmit": "Submit",
     "prop.provideClMortageMsg": "Please provide Current lender and Mortgage contract number",
     "prop.invalidClMortageMsg": "Invalid Current lender or Mortgage contract number",
-
     "product.EPIText": "(EN) Equated Periodic Installment",
     "product.APR": "(EN) Effective APR%",
     "product.TOV": "(EN) Total Offer Value",
@@ -44,10 +43,12 @@
     "product.Renovation": "(EN) Renovation",
     "product.Landscape": "(EN) Landscape",
     "product.BrickWall": "(EN) Brick Wall",
-    "product.Garage": "(EN) Garage"
-
-
-
+    "product.Garage": "(EN) Garage",
+    "progress.basicInfo": "Basic Info",
+    "progress.propSelection": "Property Selection",
+    "progress.offerSelection": "Offer Selection",
+    "progress.finalOffer": "Final Offer",
+    "progress.savingDtl": "Saving your Details.."
   },
   "du": {
     "lightningMortgage": "Bliksem Hypotheek",
@@ -81,7 +82,6 @@
     "product.TOV": "(DE) Total Offer Value",
     "product.tenure": "(DE) Tenure",
     "product.amount": "(DE) Amount",
-
     "product.DownPayment": "(DE) Down Payment",
     "product.RepaymentMode": "(DE) Repayment Mode",
     "product.Monthly": "(DE) Monthly",
@@ -94,7 +94,11 @@
     "product.Renovation": "(DE) Renovation",
     "product.Landscape": "(DE) Landscape",
     "product.BrickWall": "(DE) Brick Wall",
-    "product.Garage": "(DE) Garage"
-
+    "product.Garage": "(DE) Garage",
+    "progress.basicInfo": "Basis informatie",
+    "progress.propSelection": "Eigenschapselectie",
+    "progress.offerSelection": "Aanbod Selectie",
+    "progress.finalOffer": "Laatste bod",
+    "progress.savingDtl": "Uw gegevens opslaan.."
   }
 }
