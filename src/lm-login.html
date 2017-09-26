@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel = "import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"> 
 
 <dom-module id="lm-login">
-  
+
   <template id="login" is="dom-bind">
     <style include="shared-styles">
          
@@ -117,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class Login extends Polymer.Element {
+    class Login extends LmGlobal {
       static get is() { return 'lm-login'; }
       static get properties() {
         return {
@@ -139,11 +139,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         }
       }
-      
+
       login() {
         this.loader = true;
         let userDetails = this.postBody;
-        if(userDetails && userDetails.userId && userDetails.password) {
+        if (userDetails && userDetails.userId && userDetails.password) {
           this.ajaxResponse;
           this.$.ironAjaxElement.generateRequest();
         }
@@ -157,10 +157,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         window.history.pushState({}, null, '/view-profile');
         window.dispatchEvent(new CustomEvent('location-changed'));
         }
-     
-       
+
+
       }
-      getPostBody (userId, password) {
+      getPostBody(userId, password) {
         return {
           userId: userId,
           password: password
@@ -170,6 +170,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     window.customElements.define(Login.is, Login);
   </script>
-</dom-module> 
-
-
+</dom-module>
