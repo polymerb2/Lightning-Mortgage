@@ -11,7 +11,7 @@
                 display: block
             }
             .prop-details{
-                width: 980px;
+                width: 80%;
                 margin: 0px auto 50px;
                 overflow: hidden;
                 position: relative;
@@ -36,8 +36,8 @@
          <h3>Do you want mortgage on a new property or refinance an existing mortgage?</h3>
         	<section  class="propSelection">        		
 				<paper-radio-group id="propSelection" selected="getPropDetails">
-			        <paper-radio-button name="getPropDetails" on-click="showPropDetails">Enter property details</paper-radio-button>
-			        <paper-radio-button name="getLoanDetails" on-click="showLoanDetails">Refinance Existing mortgage loan</paper-radio-button>
+			        <paper-radio-button name="getPropDetails" on-tap="showPropDetails">Enter property details</paper-radio-button>
+			        <paper-radio-button name="getLoanDetails" on-tap="showLoanDetails">Refinance Existing mortgage loan</paper-radio-button>
 			    </paper-radio-group>
 		    </section>
 		    <section>
