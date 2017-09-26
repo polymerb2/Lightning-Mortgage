@@ -136,7 +136,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
             .slider-header{
                 margin:10px auto 0;
-                width:83%;
+                width:85%;
                 border-bottom:1px solid #ffa726;
                  border-top:1px solid #ffa726;
                 /* box-shadow:0px 4px 1px #f1f1f1;*/
@@ -344,7 +344,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     </paper-dialog>
                     <div class="center">&nbsp;</div>
                     <div>
-                        <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">I agree</paper-checkbox>&nbsp;
+                        <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">{{localize('product.Agree')}}</paper-checkbox>&nbsp;
                          <a href="javascript:void(0);" on-click="openterms">Terms and conditions</a> 
                         <div class="right">
                             <paper-button id="submitbtn" class="paper-button-disabled" disabled$="[[!checked]]" on-click="_submitInfo">Submit</paper-button>
@@ -366,11 +366,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         <div><label><span class="fontincrease">Down payment: </span>&euro; [[offerdownpayment]]</label></div>
                         <div><label><span class="fontincrease">EPI: </span> &euro; {{epi}}</label></div>
                         <div>
-                            <h4>Total Offer Breakup</h4>
-                            <div><label>Funded by Bank : &euro;{{_convertToLocale(offeramount)}}</label></div>
-                            <div><label>Funded by applicant : &euro;{{_convertToLocale(offerdownpayment)}}</label></div>
-                            <div><label>Value Added Services : &euro;{{_convertToLocale(vasamount)}}</label></div>
-                            <div><label>Total Offer Value : &euro;{{_convertToLocale(totaloffervalue)}}</label></div>
+                            <h4>{{localize('product.TOB')}}</h4>
+                            <div><label>{{localize('product.FBB')}} : &euro;{{_convertToLocale(offeramount)}}</label></div>
+                            <div><label>{{localize('product.FBA')}} : &euro;{{_convertToLocale(offerdownpayment)}}</label></div>
+                            <div><label>{{localize('product.VAS')}} : &euro;{{_convertToLocale(vasamount)}}</label></div>
+                            <div><label>{{localize('product.TOV')}} : &euro;{{_convertToLocale(totaloffervalue)}}</label></div>
                         </div>
                         <div><a target="_blank" href="src/myexcel.xlsx">Click to download Amortization chart</a></div>
                         <div><label><b>Copy of this offer has been sent to your registered email address.</b></label> </div>
