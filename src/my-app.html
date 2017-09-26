@@ -54,8 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       #langSelector {
         z-index: 9999;
         position: absolute;
-        right: 30px;
-        top: 22px;
+        right: 129px;
+        top: 27px;
       }
 
       #langSelector a {
@@ -131,7 +131,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header> -->
 
-        <rm-header language=[[language]]></rm-header>
+
+        <rm-header page='{{page}}' language=[[language]]></rm-header>
+
         <div class="progress">
             <progress-stepper page='{{page}}' ></progress-stepper>
         </div>

@@ -57,6 +57,58 @@
         border-bottom:4px solid #f60;
         box-shadow: 2px 2px 6px 4px #bdacac;
        }
+       div.box {
+          height: 38px;
+	    width: 100px;
+	    background-color: #f60;
+	    position: relative;
+	    right: 16px;
+	    top: 16px;
+        border-radius:7px;
+        margin-top : -7px;
+
+    }
+
+    .box:before {
+        position:absolute;					
+        left:40px; 						
+        top:-20px;
+        content:'';							
+        height:0;
+        width:0;
+        border:10px solid transparent;
+        z-index:1; 	
+        transform:rotate(90deg);
+    }
+
+    .box:after{
+        position:absolute; 			
+        left:40px; 						
+        top:-20px;
+        content:''; 						
+        height:0;
+        width:0;
+        border:10px solid transparent;
+        z-index:2;
+        transform:rotate(90deg)
+    }
+
+    .box:before {
+        border-right-color:#f60;
+
+    }  
+
+    .box:after {
+        border-right-color:#f60;			
+    } 
+    h6 { 
+	    text-align:center; 
+	    font-size: : 18px;
+	    color : #fff;
+	    box-sizing: border-box;
+	    padding-top: 10px;
+
+    }
 
 	</style>
 	<div class='container'>
@@ -68,8 +120,11 @@
                <a href="{{item.url}}" target="_blank">
                    <img src='../images/icon-{{item.id}}.png' />
                </a>
-               <paper-tooltip for='paper_card_{{index}}' position="top" animation-delay="0">{{item.name}}: &euro; {{item.value}}
-               </paper-tooltip>
+               <div class='box'>
+               	<h6>{{item.name}}: &euro; {{item.value}}</h6>
+               </div>
+               <!-- <paper-tooltip for='paper_card_{{index}}' position="top" animation-delay="0">{{item.name}}: &euro; {{item.value}}
+               </paper-tooltip> -->
            </div>
         </paper-card>
 		

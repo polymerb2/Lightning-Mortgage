@@ -15,8 +15,8 @@
         z-index: 10;
       }
       .container {
-        width:  100%;
-        max-width: 1170px;
+        /*width:  100%;*/
+        /*max-width: 1170px;*/
       }
       #header {
         width:  100%;
@@ -49,18 +49,24 @@
     position: relative;
     top:4px;
 }
-
+.btn-bar{
+  display: inline-block;
+  float:right;
+}
+.btn-bar a{
+  text-decoration: underline;
+  color:#FFF;
+}
 
   </style>
 
     <header>
-        <div class="container">
+          <div  class="btn-bar" id='logout' on-click="logout">
+              <a>Logout</a>
+          </div>
+        <div class="container" style="display: inline-block;">
           <div id="header">
             <rm-logo on-click=""></rm-logo>
-            <div hidden$="{{hide}}" class="btn-bar">
-              <a >Logout</a>
-    
-            </div>
           </div>
           
           </div>
@@ -82,12 +88,33 @@
         }
         static get properties(){
           return {
+            page:{
+          type:String,
+          value:'',
+          reflectToAttribute:true,
+          notify:true,
+          observer:'_checkPage'
+          },
           hide: {
             type: Boolean,
             value:true
           }
           }
         }
+        logout(){
+          localStorage.clear();
+          window.history.pushState({}, null, '/login');
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        }
+
+         _checkPage(){
+          if(this.page =='login' || this.page ==''){
+            this.$.logout.style.display='none';
+          }
+          else {
+            this.$.logout.style.display='inline-block';
+          }
+         }
       }
     window.customElements.define(RmHeader.is, RmHeader);
    
