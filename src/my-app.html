@@ -53,9 +53,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       #langSelector {
         z-index: 9999;
-        position: absolute;
-        right: 30px;
-        top: 22px;
+        position: fixed;
+        right: 129px;
+        top: 27px;
       }
 
       #langSelector a {
@@ -106,7 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-route route="{{subroute}}" pattern="/:id" data="{{subrouteData}}">
     </app-route>
 
-    <div id="langSelector"><a href="javascript:void(0);" on-click="langChangeEn">En</a> | <a href="javascript:void(0);" on-click="langChangeDu">Du</a></div>
+    <div id="langSelector"><a href="javascript:void(0)" on-click="langChangeEn">En</a> | <a href="javascript:void(0)" on-click="langChangeDu">Du</a></div>
+
     <app-drawer-layout fullbleed narrow="{{narrow}}">
       <!-- Drawer content -->
       <!-- <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
@@ -131,9 +132,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </app-toolbar>
         </app-header> -->
 
-        <rm-header language=[[language]]></rm-header>
+
+        <rm-header page='{{page}}' language=[[language]]></rm-header>
+
         <div class="progress">
-            <progress-stepper page='{{page}}' ></progress-stepper>
+            <progress-stepper page='{{page}}' language=[[language]] ></progress-stepper>
         </div>
         <iron-pages
             selected="[[page]]"
@@ -142,13 +145,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             role="main">
             <lm-login language=[[language]] name="login"></lm-login>
           <lm-profile-status name="profile-status"></lm-profile-status>
+
           <lm-view-profile language=[[language]] name="view-profile"></lm-view-profile>
           <lm-register-profile language=[[language]] name="register-profile"></lm-register-profile>
-          <property-selection name="property-selection"></property-selection>
+          <property-selection name="property-selection" language=[[language]]></property-selection>
           <product-preference name="products"></product-preference>
             <lm-home name="home"></lm-home>
-
-
           <my-view404 name="view404"></my-view404>
         </iron-pages>
         <rm-footer language=[[language]]></rm-footer>

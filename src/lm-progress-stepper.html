@@ -10,6 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <link rel="import" href="shared-styles.html">
 
@@ -177,10 +179,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
 
 .btn-bar{
-
-  position: relative;
-  top: -85px
+  float: right;
+  display: inline-block;
 }
+
+  #cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      display: none;
+  }
+  paper-button {
+    float: right;
+  }
 
 @media handheld, screen and (max-width: 400px) {
   .progress-indicator {
@@ -192,41 +207,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <div class="container">
        
-
+          <div class="btn-bar">
+            <paper-button class = "LM-gray" on-click = "saveDialogue">Save</paper-button>
+          </div>
        
         <ul class="progress-indicator">
 
             <li class$="{{isprofile}}">
                 <span class="bubble"></span>                
                 <img src="./images/tick.png" id='profile' class='hidden' />                   
-                Basic Info
+                {{localize('progress.basicInfo')}}
             </li>
 
             <li class$="{{isproperty}}">
                 <span class="bubble"></span>
                 <img src="./images/tick.png" id='property' class='hidden'/>
-                 Property Selection
+                {{localize('progress.propSelection')}}
             </li>
              <li class$="{{isproduct}}">
                 <span class="bubble"></span>
                 <img  src="./images/tick.png" id='products' class='hidden'/>
-                Offer Selection
+                {{localize('progress.offerSelection')}}
             </li>
             <li>
                 <span class="bubble"></span>
                 <img class="hidden" src="./images/tick.png"/>
-                Final Offer
+                {{localize('progress.finalOffer')}}
 
             </li>
         </ul>
     </div>
-    <div class="btn-bar">
-      <button>Save</button>
-    </div>
+    <div id="cover"></div>
+      <paper-dialog id="saveDialogBox" no-cancel-on-outside-click >
+        <div on-click="closeDialog">
+          <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+        </div>
+        <label>{{localize('progress.savingDtl')}}</label>   
+        <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>             
+      </paper-dialog>
+
   </template>
 
   <script>
-    class ProgressStepper extends Polymer.Element {
+    class ProgressStepper extends LmGlobal {
       static get is() { return 'progress-stepper'; }
      static get properties(){
         return {
@@ -282,7 +305,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           break; 
         }
       }
+      saveDialogue(){
+        
+        this.$.cover.style.display="block";
 
+        this.$.saveDialogBox.open();
+        this.isActive = false;
+        return;
+      }
+      closeDialog(){
+        this.$.cover.style.display="none";
+        return;
+      }
 
     }
 
