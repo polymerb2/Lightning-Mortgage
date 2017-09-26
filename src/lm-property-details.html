@@ -183,11 +183,17 @@
               else 
                 this.propDetailsData.propertyDetails["customerId"] = 101;
               //console.log("hi   "+JSON.stringify(this.propDetailsData));
-              localStorage.postalCode = this.propDetailsData.propertyDetails["postalCode"];
-              localStorage.outstandingBalance = "";
-               //window.history.pushState({},"", '/products/');
-                //window.dispatchEvent(new CustomEvent('location-changed'));
-              this.$.propDetailsReq.generateRequest();
+
+              if(this.propertydetails["propPostCode"]!=undefined && this.propertydetails["propCity"]!=undefined){
+                localStorage.postalCode = this.propDetailsData.propertyDetails["postalCode"];
+                localStorage.outstandingBalance = "";
+                this.$.propDetailsReq.generateRequest();
+              } else {
+                this.$.cover.style.display = "block";
+                this.$.dialogBox.close();
+                this.$.dialogBoxPostErrorResponse.open();
+                this.isActive = false;
+              }
             }
             handleCityInfoResponse(res){
               //alert("jjjj");
@@ -209,6 +215,7 @@
             dialogBoxPostErrorResponse(res){
               //console.log("hhhhhhhhhhhhhhhh");
               this.$.cover.style.display = "block";
+              this.$.dialogBox.close();
               this.$.dialogBoxPostErrorResponse.open();
               this.isActive = false;
               
