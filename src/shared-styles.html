@@ -14,6 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="shared-styles">
   <template>
     <style>
+      h3{
+        font-size: 15px;
+      }
+      paper-input-container label{
+        font-size: 13px;
+      }
       .card {
         margin: 24px;
         padding: 16px;
@@ -40,6 +46,156 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #212121;
         font-size: 22px;
       }
+      paper-input {
+         --paper-input-container-focus-color: #ff6600; 
+         --paper-input-container-label-focus:{
+            color:#1f1f1f;
+         }
+         --paper-input-container-label: {
+           font-size:14px;
+         }
+         --paper-input-container-input: {
+           font-size:14px;
+         }
+         --paper-input-error:{
+            background: #f5e7e7;
+            padding:2px 5px;
+        }
+      }
+      paper-dropdown-menu{
+        --paper-input-container-focus-color: #ff6600; 
+        --paper-input-container-label-focus:{
+            color:##1f1f1f;
+         }
+         --paper-input-container-label: {
+           font-size:14px;
+         }
+         --paper-input-container-input: {
+           font-size:14px;
+         }
+         --paper-dropdown-menu-icon:{
+             color:#f60;
+         }
+        --paper-item-selected-weight : 500;
+        --paper-item-focused: {
+            background-color: #a8a8a8;
+            color:#fff;
+        }
+         overflow: hidden;
+         margin-bottom: 10px;
+      }
+      
+      paper-button {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+        specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+        background-color: var(--paper-pink-a200);
+        color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+        background-color: var(--paper-pink-a200) !important;
+        color: white !important;
+        };
+        padding:10px;
+        border-radius:4px;
+        text-align:center;
+        cursor: pointer;
+    }
+    paper-card{
+      --paper-card-header-text: {
+        font-size:15px;
+        padding:5px 10px;
+      }
+      --paper-card-content: {
+        padding:5px 10px;
+        font-size:13px;
+      }
+    }
+    paper-dialog {
+      border:2px solid #777777;
+      border-radius: 5px; 
+      padding: 0 10px 20px 10px;
+    }
+    paper-dialog label{
+        display: block;
+      }
+    paper-button.dialog-orange{
+      margin: 10px 5px 0 0;
+      padding: 3px;
+      font-size: 12px;
+      min-width: 2.5em;
+    }
+    paper-icon-button{
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: -13px;
+      right: -13px;
+      --iron-icon-fill-color: #f60;
+      width: var(--iron-icon-width, 27px);
+      height: var(--iron-icon-height, 27px);
+      padding: 0;
+    }
+     paper-button:hover{
+         background: #ffa726;
+         color: #fff;
+         opacity: .5;
+     }
+      paper-button {
+        background-color: #f60;
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+        background-color: var(--paper-pink-a200) !important;
+        color: white !important;
+        };
+      }
+      
+      paper-button.LM-gray {
+        background-color: #a8a8a8;
+        color: white;
+        --paper-button-raised-keyboard-focus: {
+        background-color: var(--paper-pink-a200) !important;
+        color: white !important;
+        };
+        margin-left: 10px;
+      }
+      paper-button.LM-gray:hover{
+        background: #9e9e9e;
+        color: #fff;
+        opacity: .5;
+    }
+    paper-button.LM-blue {
+        background-color: #301067;
+        --paper-button-raised-keyboard-focus: {
+        background-color: var(--paper-pink-a200) !important;
+        color: white !important;
+        };
+        margin-left: 10px;
+      }
+      paper-button.LM-blue:hover{
+        background: #9e9e9e;
+        color: #fff;
+        opacity: .5;
+    }
+    
+    paper-checkbox {
+      --paper-checkbox-checked-color: var(--paper-orange-700);
+      --paper-checkbox-checked-ink-color: var(--paper-orange-700);
+      --paper-checkbox-unchecked-color: var(--paper-grey-600);
+      --paper-checkbox-unchecked-ink-color: var(--paper-orange-700);
+      --paper-checkbox-label-color: var(--paper-grey-600);
+      --paper-checkbox-label-checked-color: var(--paper-orange-700);
+    }
+    paper-radio-button {
+      --paper-radio-button-checked-color: var(--paper-orange-700);
+      --paper-radio-button-checked-ink-color: var(--paper-orange-700);
+      --paper-radio-button-unchecked-color: var(--paper-grey-600);
+      --paper-radio-button-unchecked-ink-color: var(--paper-orange-700);
+      --paper-radio-button-label-color: var(--paper-grey-700);
+      --paper-radio-button-label-checked:{color:#f60;};
+      font-size: 14px;
+    }
     </style>
   </template>
 </dom-module>

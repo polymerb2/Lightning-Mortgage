@@ -1,0 +1,710 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="./lm-slider.html">
+<link rel="import" href="./lm-vas.html">
+<link rel="import" href="./term-conditions.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="lm-product-progress.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-alert-dialog/paper-alert-dialog.html">
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/scale-down-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../bower_components/iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+
+<dom-module id="product-preference">
+
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                padding: 10px;
+            }
+
+
+            header {
+                text-align: center;
+            }
+
+            .paper-button {
+                background-color: #f60;
+                color: white;
+            }
+
+            .paper-button-disabled {
+                background-color: #f60;
+                color: white;
+                opacity: 0.5;
+            }
+            .details-container {
+                background-color: white;
+                border-radius: 5px;
+                overflow: auto;
+                display: block;
+            }
+
+            paper-card.white {
+                --paper-card-header-color: black;
+            }
+
+            paper-card {
+                background: #fdfdfd;
+                border: 1px solid #f1f1f1;
+                box-shadow: none;
+                border-radius: 5px;
+                text-align: center;
+                width: 280px;
+                cursor: pointer;
+                margin: 20px;
+                box-sizing: border-box;
+                padding: 5px;
+                box-shadow: 2px 2px 6px 1px #bdacac;
+            }
+
+            paper-card.selected {
+                border-bottom: 4px solid #f60;
+                box-shadow: 2px 2px 6px 4px #bdacac;
+            }
+
+
+            .flex-container {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                text-align:center;
+            }
+
+            .flex-item {
+                flex: 1;
+            }
+
+            .flex-container-bleed {
+                @apply(--layout-horizontal);
+                @apply(--layout-wrap);
+                justify-content: center;
+            }
+
+            .flex-item-4 {
+                @apply(--layout-flex-4);
+            }
+
+            .bold-item {
+                font-weight: bold;
+            }
+
+            .submittedClass {
+                padding: 10px;
+                color: green;
+                font-weight: normal;
+                font-size: 15px;
+                display: block;
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            .center {
+                /*margin-left: 23px;*/
+                font-weight: bold;
+                font-size: 20px;
+                color: #1f1f1f;
+                border-bottom: 1px solid #e8e8e8;
+                /*padding-bottom: 10px;*/
+            }
+
+            .right {
+                text-align: right;
+                margin-top:-15px;
+                display: inline-block;
+                margin-left: 81%;
+            }
+            .slider-header{
+                margin:10px auto 0;
+                width:97%;
+                border-bottom:1px solid #ffa726;
+                 border-top:1px solid #ffa726;
+                /* box-shadow:0px 4px 1px #f1f1f1;*/
+
+            }
+
+            .slider-contianer {
+                margin: 50px 0 0 9%;
+                font-size:15px;
+            }
+
+            .productContainer {
+                width: 980px;
+                margin: 0px auto;
+            }
+
+            .slide-detail {
+                margin: 20px 25px;
+                display: inline-block;
+                font-size: 15px;
+            }
+
+            .slide-detail span {
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #f60;
+                }
+            .center-text{
+                text-align: center;
+             }
+ 
+            paper-dialog {
+                width: 40%;
+                height: auto;
+                padding: 2%;
+                border-radius: 5px;
+                font-size:15px;
+            }
+
+            .fontincrease {
+                font-size: 15px;
+                font-weight: 20px;
+            }
+
+            .close {
+                position: absolute;
+                top: 1%;
+                right: 30px;
+                transition: all 200ms;
+                font-size: 30px;
+                font-weight: bold;
+                text-decoration: none;
+                color: #333;
+                cursor: pointer;
+            }
+
+                .close:hover {
+                    color: #f60;
+                }
+
+            #checkboxterm {
+                font-size: 15px;
+            }
+
+            paper-dialog h2 {
+                color: forestgreen;
+                text-align: center;
+            }
+
+            #cover {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: rgba(0,0,0,0.6);
+                z-index: 5;
+                width: 100%;
+                height: 100%;
+                display: none;
+            }
+            paper-checkbox{
+                float:left;
+                margin-top : 15px;
+            }
+            .pad-left{
+               font-weight: bold;   
+               padding-left : 10px; 
+               margin-top : 15px; 
+            }
+            .mar-left{
+                font-weight: bold;  
+                margin-left : 42px;
+            }
+            .mar-left-1{
+                margin-left:26px
+            }
+
+            div a{
+                    position: relative;
+                    top: 13px;
+            }
+            paper-spinner-lite {
+            --paper-spinner-color: #FF6600;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+          }
+
+            h2.error{
+                color:red;
+            }
+            .v-space{
+            height: 15px;
+            }
+             .error{
+                color: #F00;
+                
+            }
+            #errorDialoge{
+                width: 30%;
+            }
+
+
+        </style>
+
+        <div class="productContainer card">
+            <div class="flex-container">
+                <template is="dom-repeat" items="[[productreverse]]">
+                    <paper-card id='paper_card_{{index}}' heading="[[item.productName]]" class="white flex-item" class$="{{getSelectedClass(index)}}">
+                        <div class="card-content">
+                        </div>
+                    </paper-card>
+                </template>
+            </div>
+           
+            <div class="details-container">
+                <div class="center">&nbsp;</div>
+                <div class="slider-header">
+                    <div class="slide-detail">{{localize('product.EPIText')}} (EPI) :  <span>&euro; {{_convertToLocale(epi)}}</span></div>
+                    <div class="slide-detail">{{localize('product.APR')}} : <span>{{apr}}</span></div>
+                    <div class="slide-detail">{{localize('product.TOV')}} : <span>&euro;{{_convertToLocale(totaloffervalue)}}</span></div>
+                </div>
+                <div class="slider-contianer">
+                    <lm-slider title={{localize('product.tenure')}} minval='{{termValues.minTerm}}' maxval='{{termValues.maxTerm}}' selected='{{offerterm}}' interval='{{termValues.termStep}}' suffix='Yrs'></lm-slider>
+                    <lm-slider title={{localize('product.amount')}} prefix='&euro;' minval='{{amountValues.minAmount}}' selected='{{offeramount}}' interval='{{amountValues.amountStep}}' maxval='{{amountValues.maxAmount}}'></lm-slider>
+
+
+                    <div class='pad-left'>{{localize('product.DownPayment')}} : <span class="mar-left">&euro;{{_convertToLocale(offerdownpayment)}} </span></div>
+                    <div class='pad-left'>{{localize('product.RepaymentMode')}} : <span class='mar-left-1'>{{localize('product.Monthly')}} </span></div>
+                </div>        
+                <div class="center">&nbsp;</div> 
+
+                <div class="vas-icons">
+                    <h3 class="center-text">{{localize('product.VASText')}}</h3>
+
+                <vas-service itemindex='{{vasArray}}' on-click='updateOfferAmount'></vas-service>
+                <div class='v-space'></div> 
+                 </div>
+                <div class="center">&nbsp;</div>                
+
+
+                </div>
+
+                <div>
+                    <h3>{{localize('product.TOB')}}</h3>
+                    <div>
+                        <table>
+
+                            <tr>
+                                <td><label>{{localize('product.FBB')}} :</label></td>
+                                <td>&euro;{{_convertToLocale(offeramount)}}</td>
+                            </tr>
+                            <tr>
+                                <td><label>{{localize('product.FBA')}} :</label></td>
+                                <td>&euro;{{_convertToLocale(offerdownpayment)}}</td>
+                            </tr>
+                            <tr>
+                                <td><label>{{localize('product.VAS')}} :</label></td>
+                                <td>&euro;{{_convertToLocale(vasamount)}}</td>
+                            </tr>
+                            <tr>
+                                <td><label>{{localize('product.TOV')}}  : </label></td>
+                                <td>&euro;{{_convertToLocale(totaloffervalue)}}</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite>
+                    <paper-dialog id="dialogeterm" no-cancel-on-outside-click entry-animation="scale-up-animation"
+                exit-animation="scale-down-animation" >
+                        <div>
+                            <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss on-click='closeTerms'></paper-icon-button>
+                        </div>
+                        <term-conditions terms="[[termsArray]]"></term-conditions>
+                    </paper-dialog>
+
+
+                    <paper-dialog id="errorDialoge" no-cancel-on-outside-click entry-animation="scale-up-animation" exit-animation="scale-down-animation" >
+                    <div on-click='_closeErrorDialog'>
+                        <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button >   
+                        </div>                     
+                        <div>
+
+                            <span class='error'>{{localize('product.ErrorSaving')}}</span>
+                        </div>
+                    </paper-dialog>
+                    <div class="center">&nbsp;</div>
+                    <div>
+                        <paper-checkbox checked="{{checked}}" on-change="valchanged" id="checkboxterm">{{localize('product.Agree')}}</paper-checkbox>&nbsp;
+                         <a href="javascript:void(0);" on-click="openterms">Terms and conditions</a> 
+                        <div class="right">
+                            <paper-button id="submitbtn" class="paper-button-disabled" disabled$="[[!checked]]" on-click="_submitInfo">Submit</paper-button>
+                        </div>
+                    </div>
+                    <div id="cover"></div>
+
+                    <paper-dialog id="dialoge" no-cancel-on-outside-click entry-animation="scale-up-animation"
+                exit-animation="scale-down-animation">
+   
+                        <div on-click="closedialog">
+
+                            <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+                        </div>
+                        <h2>Congratulations on your Mortgage Offer</h2>
+                        <div><label><b>Here are details of the offer:</b></label> </div>
+                        <div><label><span class="fontincrease">Date:</span> {{currentDate}}</label></div>
+                        <div><label><span class="fontincrease">Offer Term:</span> {{offerterm}} years</label></div>
+                        <div><label><span class="fontincrease">Down payment: </span>&euro; [[offerdownpayment]]</label></div>
+                        <div><label><span class="fontincrease">EPI: </span> &euro; {{epi}}</label></div>
+                        <div>
+                            <h4>{{localize('product.TOB')}}</h4>
+                            <div><label>{{localize('product.FBB')}} : &euro;{{_convertToLocale(offeramount)}}</label></div>
+                            <div><label>{{localize('product.FBA')}} : &euro;{{_convertToLocale(offerdownpayment)}}</label></div>
+                            <div><label>{{localize('product.VAS')}} : &euro;{{_convertToLocale(vasamount)}}</label></div>
+                            <div><label>{{localize('product.TOV')}} : &euro;{{_convertToLocale(totaloffervalue)}}</label></div>
+                        </div>
+                        <div><a target="_blank" href="src/myexcel.xlsx">Click to download Amortization chart</a></div>
+                        <div><label><b>Copy of this offer has been sent to your registered email address.</b></label> </div>
+
+                        <paper-button style="float: right;" on-click="closedialog" class="dialog-orange" dialog-confirm>OK</paper-button>
+
+                    </paper-dialog>
+
+
+                </div>
+            </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <iron-ajax id="ironAjaxOnload"
+                   url="{{onloadurl}}"
+                   params='{{params}}'
+                   handle-as="json"
+                   on-response="_handleResponseForProducts"
+                   debounce-duration="300">
+        </iron-ajax>
+
+        <!-- <iron-ajax
+             auto
+             url="src/products.json"
+             params='{{params}}'
+             handle-as="json"
+             on-response="_handleResponseForProducts"
+             debounce-duration="300">
+        </iron-ajax> -->
+
+        <iron-ajax id="ironAjaxSubmit"
+                   url="http://10.138.64.19:8080/lightningmortgage/customerOffer"
+                   handle-as="json"
+                   body='{{postBody}}'
+                   method="post"
+                   on-response="sendResponse"
+                   content-type="application/json">
+        </iron-ajax>
+    </template>
+
+
+    <script>
+        class ProductPreference extends LmGlobal {
+            constructor() {
+                super();
+                this.products = [];
+                this.customerId='';
+                this.postalCode='';
+            }
+            connectedCallback() { 
+                super.connectedCallback();
+                this.customerId = localStorage.getItem("userId");
+                this.postalCode = localStorage.getItem("postalCode");
+                let balance = localStorage.getItem("outstandingBalance");
+                if (this.postalCode == null || this.postalCode == "") {
+                    this.postalCode = "0";
+                }
+                if (balance == null || balance == "") {
+                    balance = 0;
+                }
+              //  this.onloadurl = "http://10.138.13.58:8080/lightningmortgage/identifyProduct/123/1012CM/0";
+                this.onloadurl = "http://10.138.64.19:8080/lightningmortgage/identifyProduct/" + this.customerId + "/" + this.postalCode + "/" + balance;
+                this.$.ironAjaxOnload.generateRequest();
+            }
+            static get is() { return 'product-preference'; }
+            static get properties() {
+                return {
+                    productName: {
+                        type: String,
+                        value: "Product Name"
+                    },
+                    productItem: {
+                        type: Object,
+                        value: {},
+                        observer: "_productChanged"
+                    },
+                    termValues: {
+                        type: Object,
+                        value: {},
+                        observer: "_productChanged"
+                    },
+                    amountValues: {
+                        type: Object,
+                        value: {},
+                        observer: "_productChanged"
+                    },
+                    offeramount: {
+                        type: Number,
+                        observer: "_amountChanged"
+                    },
+                    offerterm: {
+                        type: Number,
+                        observer: "_termChanged"
+                    },
+                    offerdownpayment: {
+                        type: Number
+                    },
+                    epi: {
+                        type: String,
+                        value: "0"
+                    },
+                    apr: {
+                        type: String,
+                        value: ""
+                    },
+                    postBody: {
+                        type: Object,
+                        value: {
+                        }
+                    },
+                    datasubmitted: {
+                        type: Boolean,
+                        value: false
+                    },
+                    totaloffervalue: {
+                        type: Number
+                    },
+                    vasamount: {
+                        type: Number,
+                        value: 0
+                    },
+                    termsArray: Array,
+                    vasArray: {
+                        type: Array,
+                        value: [{ 'id': 0, 'name': 'Renovation', 'value': 100, 'url': 'https://www.asianpaints.com/' },
+                        { 'id': 1, 'name': 'Landscape', 'value': 200, 'url': 'http://www.gardeners.com/' },
+                        { 'id': 2, 'name': 'Brick Wall', 'value': 300, 'url': 'https://www.99acres.com/' },
+                        { 'id': 3, 'name': 'Garage', 'value': 400, 'url': 'https://www.housejoy.in/' }]
+                    }
+                }
+            }
+            _convertToLocale(val) {
+                if (val == 0) {
+                    return val.toLocaleString();
+                }
+                if (val) {
+                    return val.toLocaleString();
+                }
+            }
+            updateEPI_APR(data, term, offer) {
+                for (let i = 0; i < data.length; i++) {
+                    if (term == data[i].productTerm) {
+                        if (offer == data[i].offerValue) {
+                            this.epi = data[i].epi;
+                        }
+                    }
+                }
+                this.totaloffervalue = this.offeramount + this.offerdownpayment;
+                let tmp = this.shadowRoot.querySelector('vas-service');
+                this.totaloffervalue += tmp.totalvas;
+            }
+            updateOfferAmount() {
+                let tmp = this.shadowRoot.querySelector('vas-service');
+                this.vasamount = tmp.totalvas;
+                this.totaloffervalue = parseInt(this.offeramount) + parseInt(this.offerdownpayment) + parseInt(tmp.totalvas);
+            }
+            _getProductDetails(event) {
+                let selectedIndex = event.model.__data.index;
+                var classList = this.shadowRoot.querySelectorAll('paper-card');
+                classList.forEach((e) => {
+                    e.classList.remove('selected');
+                });
+                classList[selectedIndex].classList.add('selected');
+                this.productIndex = selectedIndex;
+            }
+            _amountChanged(newValue, oldValue) {
+                if (oldValue !== undefined) {
+                    this.updateEPI_APR(this.productDetails, this.offerterm, this.offeramount);
+                    this.offerdownpayment = newValue * 0.1;
+                }
+            }
+            _termChanged(newValue, oldValue) {
+                if (oldValue !== undefined) {
+                    this.amountValues = this.setAmountMinMaxStep(this.productDetails, this.offerterm);
+                    this.offeramount = this.amountValues.maxAmount;
+                    this.updateEPI_APR(this.productDetails, this.offerterm, this.offeramount);
+                }
+            }
+            _productChanged(newValue, oldValue) {
+               
+            }
+            _paramChanged(newValue, oldValue) {
+            }
+            _submitInfo() {
+                this.isActive = true;
+                this.datasubmitted = true;
+                this.postBody.customerId = this.customerId;
+                this.postBody.epi = this.epi;
+                this.postBody.offerTerm = this.offerterm;
+                this.postBody.offerValue = this.offeramount;
+                this.postBody.downPayment = this.offerdownpayment;
+                this.postBody.annualPercentageRate = this.apr;
+                var request = this.$.ironAjaxSubmit.generateRequest();
+                let _self = this;
+                request.completes.then(function(req) {
+                    _self.isActive = false;
+                    _self.datasubmitted = true;
+                    _self.$.dialoge.open();
+                    _self.$.checkboxterm.disabled = true;
+                    _self.$.submitbtn.disabled = true;
+                    _self.$.submitbtn.classList.add('paper-button-disabled');
+                    _self.$.submitbtn.classList.remove('paper-button');
+                    _self.$.cover.style.display = "block";
+                }, function(rejected) {
+                     _self.isActive = false;
+                    _self.$.errorDialoge.open();
+                   // _self.$.checkboxterm.disabled = true;
+                    _self.$.cover.style.display = "block";
+                });
+            }
+            
+ 
+            setTermMinMaxStep(data) {
+                let tempMin = data[0].productTerm;
+                let tempMax = 0;
+                let tempStep = 0;
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i].productTerm < tempMin) {
+                        tempStep = tempMin - data[i].productTerm;
+                        tempMin = data[i].productTerm;
+                    }
+                    if (data[i].productTerm > tempMax) {
+                        tempStep = data[i].productTerm - tempMax;
+                        tempMax = data[i].productTerm;
+                    }
+                }
+                var tempObj = {};
+                tempObj.minTerm = tempMin;
+                tempObj.maxTerm = tempMax;
+                tempObj.termStep = tempStep;
+                return tempObj;
+            }
+            setAmountMinMaxStep(data, term) {
+                let tempMin = 0;
+                let tempMax = 0;
+                let tempStep = 0;
+                for (let i = 0; i < data.length; i++) {
+                    if (term == data[i].productTerm) {
+                        if (tempMin == 0) {
+                            tempMin = data[i].offerValue;
+                        }
+                        if (data[i].offerValue < tempMin) {
+                            tempStep = tempMin - data[i].offerValue;
+                            tempMin = data[i].offerValue;
+                        }
+                        if (data[i].offerValue > tempMax) {
+                            tempStep = data[i].offerValue - tempMax;
+                            tempMax = data[i].offerValue;
+                        }
+                    }
+                }
+                var tempObj = {};
+                tempObj.minAmount = tempMin;
+                tempObj.maxAmount = tempMax;
+                tempObj.amountStep = tempStep;
+                return tempObj;
+            }
+            //getAPI
+            _handleResponseForProducts(data) {
+                this.products = data.detail.response;
+                this.productreverse = this.products.product.reverse();
+                this.productDetails = this.products.offer;
+                this.productIndex = 0;
+                this.productObject = this.products.product[this.productIndex];
+                if (this.products) {
+                    this.productId = this.productObject.productId;
+                    this.termValues = this.setTermMinMaxStep(this.productDetails);
+                    this.offerterm = this.termValues.maxTerm;
+                    this.amountValues = this.setAmountMinMaxStep(this.productDetails, this.offerterm);
+                    this.offeramount = this.amountValues.maxAmount;
+                    this.termsArray = this.productObject.terms;
+                    this.epi = this.productDetails[this.productDetails.length - 1].epi;
+                    this.apr = this.productDetails[0].annualPercentageRate;
+                    this.offerdownpayment = this.offeramount * 0.1;//this.productDetails[this.productDetails.length-1].minDownpayment;
+                    this.totaloffervalue = this.offeramount + this.offerdownpayment;
+                   // this.currentDate = "22 Sep 2017";
+                    var today = new Date();
+                    var dated = today.getDate();
+                    var monthd = today.getMonth() + 1;
+                    var years = today.getFullYear();
+                    this.currentDate = dated + "-" + monthd + "-" + years;
+                    this.checked = false;
+                    this.isActive = false;
+
+
+                }
+            }
+            getSelectedClass(index) {
+                if (index == 0) {
+                    return 'selected';
+                }
+            }
+            valchanged(event) {
+                if (this.$.checkboxterm.checked) {
+                    this.$.submitbtn.classList.remove('paper-button-disabled');
+                    this.$.submitbtn.classList.add('paper-button');
+                }
+                else {
+                    this.$.submitbtn.classList.add('paper-button-disabled');
+                    this.$.submitbtn.classList.remove('paper-button');
+                }
+            }
+            
+           
+            _closeErrorDialog(event){
+                this.$.cover.style.display = "none";
+            }
+
+            openerror(event) {
+                this.$.dialogeerror.open();
+                this.$.cover.style.display = "block";
+            }
+            closeerror(event) {
+                this.$.cover.style.display = "none";
+            }
+
+           
+            closedialog() {
+                window.history.pushState({}, null, '/home');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+            openterms(event) {
+                this.$.dialogeterm.open();
+                this.$.cover.style.display = "block";
+            }
+            closeTerms(event) {
+                this.$.cover.style.display = "none";
+            }
+
+        }
+        window.customElements.define(ProductPreference.is, ProductPreference);
+    </script>
+</dom-module>

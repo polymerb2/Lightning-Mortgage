@@ -1,0 +1,126 @@
+<link rel="import" href="rm-logo.html">
+<!-- <link rel="import" href="rm-progress.html"> -->
+<dom-module id="rm-header">
+  <template>
+  <style >
+     header {
+        float: left;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        background:#FF6200;
+        border-bottom: 1px solid #d0c2c2;
+        position: fixed;
+        top:0;
+        z-index: 10;
+      }
+      .container {
+        /*width:  100%;*/
+        /*max-width: 1170px;*/
+      }
+      #header {
+        width:  100%;
+        float: left;
+        clear: left;
+      }
+      .navbar{
+        display: block;
+        z-index: 100;
+        position: fixed;
+        float:right;
+        width: 300px;
+
+
+      }
+.btn-bar a {
+    /*background-color: #fff;*/
+    border: none;
+    border-radius:3px;
+    color: #000;
+    padding: 8px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px;
+    width: 85px;
+    cursor: pointer;
+    float: right;
+    position: relative;
+    top:4px;
+}
+.btn-bar{
+  display: inline-block;
+  float:right;
+}
+.btn-bar a{
+  text-decoration: underline;
+  color:#FFF;
+}
+
+  </style>
+
+    <header>
+          <div  class="btn-bar" id='logout' on-click="logout">
+              <a>Logout</a>
+          </div>
+        <div class="container" style="display: inline-block;">
+          <div id="header">
+            <rm-logo on-click=""></rm-logo>
+          </div>
+          
+          </div>
+         
+        </div>
+
+      </header>
+
+
+  </template>
+  <script>
+    
+      class RmHeader extends Polymer.Element{
+        constructor(){
+          super();
+        }
+        static get is(){
+          return 'rm-header'
+        }
+        static get properties(){
+          return {
+            page:{
+          type:String,
+          value:'',
+          reflectToAttribute:true,
+          notify:true,
+          observer:'_checkPage'
+          },
+          hide: {
+            type: Boolean,
+            value:true
+          }
+          }
+        }
+        logout(){
+          localStorage.clear();
+          window.history.pushState({}, null, '/login');
+          window.dispatchEvent(new CustomEvent('location-changed'));
+        }
+
+         _checkPage(){
+          if(this.page =='login' || this.page ==''){
+            this.$.logout.style.display='none';
+          }
+          else {
+            this.$.logout.style.display='inline-block';
+          }
+         }
+      }
+    window.customElements.define(RmHeader.is, RmHeader);
+   
+  </script>
+
+</dom-module>
+
+
+

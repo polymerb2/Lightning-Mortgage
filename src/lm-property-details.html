@@ -1,0 +1,247 @@
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html"> 
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html"> 
+
+<link rel="import" href="shared-styles.html">
+<dom-module id="property-details">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block
+            }
+            .prop-details{
+              width:90%;
+              /* float:left; */
+              min-height: 300px;              
+              padding:10px 13%;
+              box-sizing: border-box;              
+              //margin:auto 5%;
+              //margin-top: 80px;
+              //border: 2px solid #F60;
+            } 
+
+          .prop-details paper-input,.prop-details paper-dropdown-menu{
+               //width:100%;
+               //float:left;
+               margin:0 1% 0 ; 
+          }
+          .prop-details paper-input.smallBox{
+            width: 10%;
+          }
+          .prop-details paper-input.mediumBox{
+            width: 29%;
+          }
+          .prop-details paper-input.largeBox{
+            width: 60%;
+          }
+          .prop-details .floatBox {
+            float: left;
+          }
+          .prop-details paper-button {
+            float: right;
+          }
+          paper-spinner-lite {
+            --paper-spinner-color: #FF6600;
+            position: absolute;
+            top: 200px;
+            left: 500px;
+          }
+          #cover {
+            position: fixed;
+            top:0;
+            left:0;
+            background:#000;
+            opacity: 0.6;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index:5;
+          }
+
+        </style>
+        
+        <div class="prop-details">
+        <div id="cover"></div>
+         <!-- <h3>Property Details</h3> -->
+        	<section>
+            <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite>
+          		<paper-input name="propDoorNo" class="" label="{{localize('prop.doorNumberLabel')}}" id="propDoorNo" value="{{propertydetails.propDoorNo::input}}"></paper-input>
+        			<paper-input name="propAddressLine1" class="" label="{{localize('prop.address1Label')}}" id="propAddressLine1" value="{{propertydetails.propAddressLine1::input}}"></paper-input>
+        			<paper-input name="propAddressLine2"  class="" label="{{localize('prop.address2Label')}}" id="propAddressLine2" value="{{propertydetails.propAddressLine2::input}}"></paper-input>
+              <paper-input name="propPostCode" class="floatBox" label="{{localize('prop.postalCodeLabel')}}" id="propPostCode" value="{{propertydetails.propPostCode::input}}" required auto-validate error-message="{{localize('prop.postCodeErrorMsg')}}" on-blur="getCityInfo"></paper-input>
+        			<paper-input name="propCity" class="floatBox" readonly label="{{localize('prop.cityLabel')}}" id="propCity" value="{{propertydetails.propCity::input}}"></paper-input>
+              <div style="clear: both"></div>
+              <br/>
+              <paper-button id="btnSubmit" raised class="custom orange" on-click="submitDetails">{{localize('prop.propertySubmit')}}</paper-button>
+
+              <paper-dialog id="dialogBox" no-cancel-on-outside-click>
+                <div on-click="closeDialog">
+                  <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+                </div>
+                <label>{{localize('prop.enterPostCodeMsg')}}</label>   
+                <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>             
+              </paper-dialog>
+
+              <paper-dialog id="dialogBoxPostErrorResponse" no-cancel-on-outside-click>
+                <div on-click="closeDialog">
+                  <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+                </div>
+                <label>{{localize('prop.invalidPostCodeMsg')}}</label> 
+                <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>               
+              </paper-dialog>
+
+              <paper-dialog id="dialogBoxAddErrorResponse" no-cancel-on-outside-click>
+                <div on-click="closeDialog">
+                  <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
+                </div>
+                <label>{{localize('invalidPcUserMsg')}}</label> 
+                <paper-button class="custom dialog-orange" dialog-dismiss on-click="closeDialog">Ok</paper-button>               
+              </paper-dialog>
+
+              <iron-ajax id="cityInfoReq" url={{postCodeApiUrl}} method="get"
+                         body='{{postalCodeInfo}}' handle-as="json" on-response="handleCityInfoResponse" on-error="dialogBoxPostErrorResponse">
+              </iron-ajax>
+              <iron-ajax id="propDetailsReq" url="http://10.138.64.19:8080/lightningmortgage/property/add" method="post" body='{{propDetailsData}}' handle-as="json" content-type="application/json" on-response="handlePropDetailsResponse" on-error="handleErrorResponse">
+              </iron-ajax>
+        	  </section>
+        </div>
+    </template>
+    <script>
+        class PropertyDetails extends LmGlobal {
+
+            static get is() { return 'property-details'; }
+            static get properties() {
+                return {
+                  propertydetails:{
+                        type:Object,
+                        value:{},
+                        notify:true,
+                        reflectToAttribute:true
+                    },
+                    isActive:{
+                      type : Boolean,
+                      value : false
+                    },
+                    propDetailsData:{
+                        type:Object,
+                        value:{"propertyDetails" :{}},
+                        notify:true,
+                        //reflectToAttribute:true
+                    },
+                }
+            }
+            constructor() {
+                super();
+            }
+            getCityInfo(){
+              this.isActive = true;
+
+              let postCode = this.propertydetails.propPostCode;
+              if(postCode!="undefined" && postCode!="")
+              //this.postCodeApiUrl = "https://api.bring.com/shippingguide/api/postalCode.json?clientUrl=t&country=NL&pnr="+postCode;
+              this.postCodeApiUrl = "http://10.138.64.19:8080/lightningmortgage/city/"+postCode;
+              //this.$.btnSubmit.disabled= true;
+              this.$.cityInfoReq.generateRequest();
+            }
+            submitDetails() {
+              this.isActive = true;
+              //API URL -- http://10.138.13.156:8080/lightningmortgage/property/add
+              //console.log("hi"+JSON.stringify(this.propertydetails));
+              //{"propDoorNo":"11","propAddressLine1":"Address1","propAddressLine2":"Address2","propPostCode":"8211"}
+              this.propDetailsData.propertyDetails["doorNumber"]= "";
+              if(this.propertydetails["propDoorNo"]!=undefined)
+                this.propDetailsData.propertyDetails["doorNumber"]=this.propertydetails["propDoorNo"];
+              
+              this.propDetailsData.propertyDetails["addressLine1"] = "";
+              if(this.propertydetails["propAddressLine1"]!=undefined)
+                this.propDetailsData.propertyDetails["addressLine1"]=this.propertydetails["propAddressLine1"];
+
+              this.propDetailsData.propertyDetails["addressLine2"] = "";
+              if(this.propertydetails["propAddressLine2"]!=undefined)
+                this.propDetailsData.propertyDetails["addressLine2"]=this.propertydetails["propAddressLine2"];
+
+              this.propDetailsData.propertyDetails["postalCode"]="";
+              console.log("pc "+this.propertydetails["postalCode"]);
+              if(this.propertydetails["propPostCode"]!=undefined){
+                this.propDetailsData.propertyDetails["postalCode"]=this.propertydetails["propPostCode"];
+              } else {
+                this.$.dialogBox.open();
+                this.$.cover.style.display = "block";
+                this.isActive = false;
+                return;
+              }
+
+              this.propDetailsData.propertyDetails["city"]="";
+              if(this.propertydetails["propCity"]!=undefined)
+                this.propDetailsData.propertyDetails["city"]=this.propertydetails["propCity"];
+              //console.log("LOC "+localStorage.userId);
+              if(localStorage.userId!=undefined && localStorage.userId!="" )
+                this.propDetailsData.propertyDetails["customerId"]=localStorage.userId;
+              else 
+                this.propDetailsData.propertyDetails["customerId"] = 101;
+              //console.log("hi   "+JSON.stringify(this.propDetailsData));
+
+              if(this.propertydetails["propPostCode"]!=undefined && this.propertydetails["propCity"]!=undefined){
+                localStorage.postalCode = this.propDetailsData.propertyDetails["postalCode"];
+                localStorage.outstandingBalance = "";
+                this.$.propDetailsReq.generateRequest();
+              } else {
+                this.$.cover.style.display = "block";
+                this.$.dialogBox.close();
+                this.$.dialogBoxPostErrorResponse.open();
+                this.isActive = false;
+              }
+            }
+            handleCityInfoResponse(res){
+              //alert("jjjj");
+              //console.log(JSON.stringify(res.detail.response));
+              let valid = res.detail.response.valid;
+              if(valid){
+                //console.log(JSON.stringify(res.detail.response.result));
+                this.$.propCity.value = res.detail.response.result;
+                this.propertydetails["propCity"] = res.detail.response.result;
+              } else {
+                this.$.propCity.value = "";
+                this.$.cover.style.display = "block";
+                this.$.dialogBoxPostErrorResponse.open();
+                this.isActive = false;
+              }
+              this.isActive = false;
+              //this.$.btnSubmit.disabled= true;
+            }
+            dialogBoxPostErrorResponse(res){
+              //console.log("hhhhhhhhhhhhhhhh");
+              this.$.cover.style.display = "block";
+              this.$.dialogBox.close();
+              this.$.dialogBoxPostErrorResponse.open();
+              this.isActive = false;
+              
+              return;
+            }
+            handlePropDetailsResponse(res){
+              //console.log("kkkk"+JSON.stringify(res.detail.response));
+              let response = res.detail.response;
+              this.isActive = false;
+              let customerId = this.propDetailsData.propertyDetails["customerId"];
+              if(response.responseCode == 200 && response.responseData.propertyStatus==true){
+                window.history.pushState({},"", '/products/');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+              } 
+            }
+            handleErrorResponse(res){
+              //console.log(res.detail.request.xhr.response);
+              this.$.dialogBoxPostErrorResponse.close();
+              this.$.dialogBoxAddErrorResponse.open();
+              this.$.cover.style.display = "block";
+              this.isActive = false;
+            }
+            closeDialog(){
+              this.$.cover.style.display="none";
+            }
+        }
+        window.customElements.define(PropertyDetails.is, PropertyDetails);
+      </script>
+</dom-module>

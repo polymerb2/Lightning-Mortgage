@@ -1,0 +1,183 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="lm-login">
+
+  <template id="login" is="dom-bind">
+    <style include="shared-styles">
+
+      .login-container{
+        margin: 48px auto;
+        width: 30%;
+        /* border: 1px solid #e8e8e8; */
+
+        padding: 15px;
+      }
+      .icon_space{margin-right: 10px;}
+      .button-class{
+        margin-top: 15px;
+        float: right;
+      }
+      .header{
+        padding: 10px;
+        border-bottom: 0;
+        margin-top: 100px;
+        color: #fff;
+        background: #f60;
+      }
+      .login-bg{
+              background: url(../images/Polygon-BG-bottom-6.jpg) no-repeat;
+              background-size: 100%;
+              height: 550px;
+            }
+            .login-form{
+              border: 1px solid #ccc;
+              padding: 10px;
+              border-top: 0;
+              overflow: hidden;
+            }
+
+
+
+
+            .invalidUser
+            {
+              text-align: center;
+              padding-top: 45px;
+              color: red;
+              font-size: 13px;
+              margin-top: 10px;
+              padding:2px 5px;
+            }
+             .regi_btn{
+              display: inline-block;
+              float: left;
+              margin-top: 25px;
+            }
+            .regi_btn a{
+              font-size: 14px;
+              color: #301067;
+            }
+            paper-spinner-lite {
+            --paper-spinner-color: #FF6600;
+            position: absolute;
+            top: 290px;
+            left: 600px;
+          }
+          paper-spinner-lite.active{position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+
+    </style>
+<div class="login-bg">
+      <div class="login-container">
+        <div class="header">{{localize('login')}}</div>
+          <div id="Reg" class="login-form">
+            <form name="form">
+
+              <!-- <h2 class="header">Login to Lightning Mortgage</h2> -->
+              <div class = "invalidUser"> <span hidden="{{hideMessage}}">{{ajaxResponse.message}}</span></div>
+
+            <paper-spinner-lite active$="{{loader}}" class="orange active"></paper-spinner-lite>
+            <paper-input class="input_field" label="{{localize('username')}}" id="username" value="{{userId::input}}" type="text" maxlength="10"
+              required error-message="{{localize('usernameError')}}" auto-validate>
+              <iron-icon icon="account-circle" class="icon_space" slot="prefix"></iron-icon>
+            </paper-input>
+            <paper-input class="input_field" label="{{localize( 'password')}}" id="password" value="{{password::input}}" type="password"
+              required error-message="{{localize('passwordError')}}" auto-validate>
+              <iron-icon icon="lock-open" class="icon_space" slot="prefix"></iron-icon>
+            </paper-input>
+          <div class="regi_btn">
+            <a href="register-profile" class="input_reg">
+              <iron-icon icon="assignment-ind" class="icon_space " slot="prefix"></iron-icon> {{localize('register')}}</a>
+          </div>
+          <paper-button raised class="button-class" on-tap="login" value="Login">
+            <iron-icon icon="assignment-turned-in"></iron-icon> {{localize('login')}}</paper-button>
+            </form>
+          </div>
+        </div>
+        </div>
+
+    <iron-ajax
+              id="ironAjaxElement"
+               url$="[[api]]lightningmortgage/customer/userLogin"
+               handle-as="json"
+               body='{{postBody}}'
+               method="post"
+               on-response="handleResponse"
+               content-type="application/json"
+               last-response="{{ajaxResponse}}"
+               >
+    </iron-ajax>
+    <!-- <span>{{ajaxResponse.responseMessage}}</span> -->
+  </template>
+
+  <script>
+    class Login extends LmGlobal {
+      static get is() { return 'lm-login'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: "bar"
+          },
+          postBody: {
+            type: String,
+            computed: 'getPostBody(userId, password)'
+        },
+        hideMessage:{
+          type:String,
+          value:""
+         },
+         loader:{
+          type : Boolean,
+          value : false
+        }
+        }
+      }
+
+      login() {
+        this.loader = true;
+        let userDetails = this.postBody;
+        if (userDetails && userDetails.userId && userDetails.password) {
+          this.ajaxResponse;
+          this.$.ironAjaxElement.generateRequest();
+        }
+      }
+      handleResponse(data) {
+        this.loader = false;
+        var result= data.detail.response
+        if(result && result.status ==="200") {
+          result.message="";
+        localStorage.setItem('userId', result.userId);
+        window.history.pushState({}, null, '/view-profile');
+        window.dispatchEvent(new CustomEvent('location-changed'));
+        }
+
+
+      }
+      getPostBody(userId, password) {
+        return {
+          userId: userId,
+          password: password
+        };
+      }
+    }
+
+    window.customElements.define(Login.is, Login);
+  </script>
+</dom-module>

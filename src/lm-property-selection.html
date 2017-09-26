@@ -1,0 +1,93 @@
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="lm-property-details.html">
+<link rel="import" href="lm-loan-details.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+
+<dom-module id="property-selection">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block
+            }
+            .prop-details{
+                width: 80%;
+                margin: 0px auto 50px;
+                overflow: hidden;
+                position: relative;
+                clear: both;
+              //border: 2px solid #F60;
+            } 
+            .prop-details h3{
+            	margin: 0 auto;
+                width: 58%;
+            }
+            .propSelection{
+                width: 60%;
+                margin: 0 auto;
+            }
+            paper-radio-button {
+                margin: 5px;
+            }
+
+        </style>
+
+        <div class="prop-details card">
+         <!-- <h3>Do you want mortgage on a new property or refinance an existing mortgage?</h3> -->
+         <h3>{{localize('prop.selectPropertyQuestion')}}</h3>
+        	<section  class="propSelection">        		
+				<paper-radio-group id="propSelection" selected="getPropDetails">
+			        <paper-radio-button name="getPropDetails" on-tap="showPropDetails">{{localize('prop.enterProperty')}}</paper-radio-button>
+			        <paper-radio-button name="getLoanDetails" on-tap="showLoanDetails">{{localize('prop.refinanceExisting')}}</paper-radio-button>
+			    </paper-radio-group>
+		    </section>
+		    <section>
+		    	<template is="dom-if" if="[[showPropPage]]" restamp>
+		    		<property-details language=[[language]]></property-details>
+		    	</template>
+		    	<template is="dom-if" if="[[showLoanPage]]" restamp>
+		    		<!-- <property-details></property-details> -->
+		    		<loan-details language=[[language]]></loan-details>
+		    	</template>
+		    </section>
+		</div>
+    </template>
+     <script>
+        class PropertySelection extends LmGlobal {
+
+            static get is() { return 'property-selection'; }
+            static get properties() {
+                return {
+                	showPropPage: {
+                		type: Boolean,
+                		notify: true,
+                		value: true,
+                		reflectToAttribute: true
+                	},
+                	showLoanPage: {
+                		type: Boolean,
+                		notify: true,
+                		reflectToAttribute: true
+                	},
+                    language: {
+                        type: String,
+                        value: 'en'
+                    },
+                  
+                }
+            }
+            constructor() {
+                super();
+            }
+            showPropDetails(e){
+            	this.showPropPage = true;
+            	this.showLoanPage = false;
+            }
+            showLoanDetails(){
+            	this.showLoanPage = true;
+            	this.showPropPage = false;
+            }
+        }
+        window.customElements.define(PropertySelection.is, PropertySelection);
+      </script>
+</dom-module>
