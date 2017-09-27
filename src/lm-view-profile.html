@@ -1,4 +1,4 @@
-<!--
+﻿<!--
 @license
 Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -85,19 +85,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-dropdown-menu.Marital_Status{width:65%;margin-top: -7px;}
         paper-dropdown-menu.dependents{width:65%;margin-top:-7px;}
         paper-dropdown-menu.mob_code{width:17%;padding-right: 3px}
-		    :host paper-input[disabled] {
-        --paper-input-container-input-color: #afafaf;
+		    :host paper-input[disabled] {
+        --paper-input-container-input-color: #afafaf;
         --paper-input-container-label:{border:1px solid red;};
         --paper-input-container-disabled: {
-        opacity: 0.7;
+        opacity: 0.7;
 
         }
         }
-        :host paper-dropdown-menu[disabled] {
-        --paper-input-container-input-color: #afafaf;
+        :host paper-dropdown-menu[disabled] {
+        --paper-input-container-input-color: #afafaf;
         --paper-input-container-disabled: {
 
-        opacity: 0.7;
+        opacity: 0.7;
 
         }
         } 
@@ -154,49 +154,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card User_details">     
     <paper-spinner-lite active$="{{isActive}}" class="orange active"></paper-spinner-lite> 
     <div class="confirm_info"><iron-icon icon="icons:verified-user" class="icon_space" slot="prefix"></iron-icon>
-        So that we can offer you the best mortgage options, please confirm if the below information is accurate
+      {{localize('profile.headerDeclaration')}}
     </div>       
-        <h3><iron-icon icon="account-box" class="icon_space" slot="prefix"></iron-icon>Personal Details</h3><hr class="separate_sec">        
+        <h3><iron-icon icon="account-box" class="icon_space" slot="prefix"></iron-icon>
+          {{localize('profile.ContentHeader')}}</h3><hr class="separate_sec">        
         <div class="row Salutation_detail"> 
           <div class="col"> 
-                <paper-dropdown-menu class="salutation" label="Salutation" value="{{ajaxResponse.salutation}}" >
+                <paper-dropdown-menu class="salutation" label="{{localize('profile.Salutation')}}" value="{{ajaxResponse.salutation}}" >
                     <paper-listbox  selected="{{selectedSalutaion}}" slot = "dropdown-content" class="val_dropdown">
-                      <paper-item value="Mr.">Mr.</paper-item>
-                      <paper-item value="Mrs.">Mrs.</paper-item>
+                      <paper-item value="Mr.">{{localize('profile.salutation_Mr')}}</paper-item>
+                      <paper-item value="Mrs.">{{localize('profile.salutation_Mrs')}}</paper-item>
                     </paper-listbox>
                   </paper-dropdown-menu>
           </div>
         </div>
           <div class="row"> 
               <div class="col"> 
-                <paper-input class="input_width" required auto-validate error-message="Fill First Name" id="firstName"autocapitalize allowed-pattern="[a-zA-Z]" 
-                label = "First name" value="{{ajaxResponse.firstName}}">
+                <paper-input class="input_width" required auto-validate error-message="{{localize('profile.Err_Firstname')}}" id="firstName"autocapitalize allowed-pattern="[a-zA-Z]" 
+                label = "{{localize('profile.Firstname')}}" value="{{ajaxResponse.firstName}}">
                   <iron-icon icon = "account-circle"  prefix></iron-icon>
                   <div class="icon_mandatory" slot="prefix">*</div>
                 </paper-input>
               </div>
               <div class="col"> 
-                <paper-input class="input_width" auto-validate error-message="Fill Last name" autocapitalize allowed-pattern="[a-zA-Z]" 
-                  label="Last Name" required value= "{{ajaxResponse.lastName}}">
+                <paper-input class="input_width" auto-validate error-message="{{localize('profile.Err_Lastname')}}" autocapitalize allowed-pattern="[a-zA-Z]" 
+                  label="{{localize('profile.Lastname')}}" required value= "{{ajaxResponse.lastName}}">
                 </paper-input>
               </div>
           </div>
           <div class="row">
             <div class="col">  
-                <paper-dropdown-menu auto-validate error-message="Fill Marital Status" 
-                class="Marital_Status" label="Marital Status"  value="{{ajaxResponse.maritalStatus}}" 
+                <paper-dropdown-menu auto-validate error-message="{{localize('profile.Err_MaritalStatus')}}" 
+                class="Marital_Status" label="{{localize('profile.MaritalStatus')}}"  value="{{ajaxResponse.maritalStatus}}" 
                  required auto-validate>
                  <div class="icon_mandatory" slot="prefix">*</div>
                   <paper-listbox  selected="{{selectedMaritalStatus}}" slot = "dropdown-content" class="val_dropdown">
-                      <paper-item value="Single">Single</paper-item>
-                      <paper-item value="Married">Married</paper-item>
-                      <paper-item value="Divorced">Divorced</paper-item>
+                      <paper-item value="Single">{{localize('profile.Single')}}</paper-item>
+                      <paper-item value="Married">{{localize('profile.Married')}}</paper-item>
+                      <paper-item value="Divorced">{{localize('profile.Divorcee')}}</paper-item>
                     </paper-listbox>
                   </paper-dropdown-menu>
             </div>
             <div class="col">
-                <paper-dropdown-menu required auto-validate error-message="No. of Dependents" 
-                class="dependents" label="No of Dependents"  value="{{ajaxResponse.noOfDependents}}">
+                <paper-dropdown-menu required auto-validate 
+                error-message="{{localize('profile.Err_dependents')}}" 
+                class="dependents" label="{{localize('profile.Dependents')}}"  value="{{ajaxResponse.noOfDependents}}">
                     <paper-listbox  selected="{{ajaxResponse.noOfDependents}}" slot = "dropdown-content" class="dep_dropdown">
                       <paper-item value="0">0</paper-item>
                       <paper-item value="1">1</paper-item>
@@ -211,27 +213,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div class="row">
             <div class="col">
-              <paper-input class="bsn_width" readonly label="BSN(National Identifier)" value="{{ajaxResponse.bsn}}">
+              <paper-input class="bsn_width" readonly label="{{localize('profile.Bsn')}}" value="{{ajaxResponse.bsn}}">
               </paper-input>
             </div>
             <div class="col"></div>
           </div>
 
-          <h3><iron-icon icon="home" class="icon_space" slot="prefix"></iron-icon>Address Details</h3><hr class="separate_sec">
+          <h3><iron-icon icon="home" class="icon_space" slot="prefix"></iron-icon>
+            {{localize('profile.AddressDetails')}}</h3><hr class="separate_sec">
           <div class="row">
             <div class="col">  
-              <paper-input class="input_width_add"label="Door Number" required auto-validate error-message="Fill Door Number" 
+              <paper-input class="input_width_add"label="{{localize('profile.DoorNumber')}}" required auto-validate error-message="{{localize('profile.DoorNumber')}}" 
               value="{{ajaxResponse.address.doorNumber}}">
               </paper-input>
             </div>
             <div class="col">
-                <paper-input class="input_width_add"label="Street Name" required auto-validate error-message="Fill Street Name" value="{{ajaxResponse.address.addressLine1}}">
+                <paper-input class="input_width_add"label="{{localize('profile.StreetName')}}" required auto-validate error-message="{{localize('profile.StreetName')}}" value="{{ajaxResponse.address.addressLine1}}">
                 </paper-input>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <paper-input class="input_width_loc"label="Locality" required auto-validate error-message="Fill Locality" 
+              <paper-input class="input_width_loc" label="{{localize('profile.Locality')}}" required auto-validate error-message="{{localize('profile.Err_Locality')}}" 
               value="{{ajaxResponse.address.addressLine2}}">
                   <iron-icon icon = "account-circle"  prefix></iron-icon>
                 </paper-input>
@@ -240,20 +243,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div class="row">
             <div class="col">
-              <paper-input class="input_width_post" id="abc"type="text" required auto-validate error-message="Fill Post code" 
-              label="Post code" 
+              <paper-input class="input_width_post" id="abc"type="text" required 
+              auto-validate error-message="{{localize('profile.Err_PostCode')}}" 
+              label="{{localize('profile.PostCode')}}" 
                 value="{{ajaxResponse.address.postCode}}" on-blur="getCityInfo"><div class="icon_mandatory" slot="prefix">*</div></paper-input>
             </div>
             <div class="col">
-                <paper-input class="input_width_post" readonly id="cityName" label="City" value="{{ajaxResponse.address.city}}"></paper-input>
+                <paper-input class="input_width_post" readonly id="cityName" 
+                label="{{localize('profile.City')}}" 
+                value="{{ajaxResponse.address.city}}"></paper-input>
 
             </div>
           </div>
 
-          <h3 class="contact_div"><iron-icon icon="settings-phone" class="icon_space" slot="prefix"></iron-icon>Contact Details</h3><hr class="separate_sec">
+          <h3 class="contact_div">
+            <iron-icon icon="settings-phone" class="icon_space" slot="prefix"></iron-icon>
+            {{localize('profile.ContactDetails')}}</h3><hr class="separate_sec">
             <div class="row Contact_details">  
               <div class="col"> 
-                <paper-input class="input_width"label="Home Number" required auto-validate error-message="Fill Home Number"
+                <paper-input class="input_width" label="{{localize('profile.HomeNumber')}}" required auto-validate error-message="{{localize('profile.Err_HomeNumber')}}"
                  value="{{ajaxResponse.homeNumber}}" 
                   type="number">
                   <div slot="prefix"></div>
@@ -261,7 +269,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </div>                
                 <div class="col mob_number">
                   <div class="mob_code">
-                    <paper-dropdown-menu class="men_btn" label="Code"  value="{{ajaxResponse.mobileCode}}">
+                    <paper-dropdown-menu class="men_btn" label="{{localize('profile.Code')}}" 
+                     value="{{ajaxResponse.mobileCode}}">
                         <paper-listbox selected="{{selectedmobileCode}}" slot = "dropdown-content" >
                           <paper-item value="+31">+31</paper-item>
                           <paper-item value="+91">+91</paper-item>
@@ -269,7 +278,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       </paper-dropdown-menu>
                   </div>
                   <div class="mobile_number">
-                    <paper-input class="input_width"required auto-validate error-message="Fill Mobile Number"  maxlength="10" label="Mobile" value="{{ajaxResponse.mobileNumber}}" 
+                    <paper-input class="input_width"required auto-validate 
+                    error-message="{{localize('profile.MobileNumber')}}"  maxlength="10" 
+                    label="{{localize('profile.MobileNumber')}}" value="{{ajaxResponse.mobileNumber}}" 
                     type="number"><div class="icon_mandatory" slot="prefix">*</div><div slot="prefix"></div>
                     </paper-input>
                 </div>
@@ -278,7 +289,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="row">  
               <div class="col">
                 
-                <paper-input class="input_width_email"required label="Email Address" required auto-validate error-message="Fill Email Address" 
+                <paper-input class="input_width_email" 
+                label="{{localize('profile.EmailAddress')}}" required auto-validate 
+                error-message="{{localize('profile.Err_EmailAddress')}}" 
                   value="{{ajaxResponse.emailAddress}}">
                   <iron-icon icon="mail" class="icon_space" slot="prefix"></iron-icon>
                   <!-- <div class="icon_mandatory_mail" slot="prefix">*</div> -->
@@ -287,31 +300,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="col"></div><div class="col"></div>
             </div>
 
-          <h3><iron-icon icon="account-balance" class="icon_space" slot="prefix"></iron-icon>Finance Details</h3><hr class="separate_sec">
+          <h3><iron-icon icon="account-balance" class="icon_space" slot="prefix"></iron-icon>
+            {{localize('profile.FinanceDetails')}}</h3><hr class="separate_sec">
           <div class="row">
             <div class="col">
-              <paper-input required class="input_width"label=" Income(confirmed)" step="200" value="{{ajaxResponse.monthlyFamilyIncome}}" type="number">
+              <paper-input required auto-validate error-message="{{localize('profile.Err_Income')}}" class="input_width" label="{{localize('profile.Income')}}" step="200" value="{{ajaxResponse.monthlyFamilyIncome}}" type="number">
                    <div slot="prefix"class="icon_space">€</div>
               </paper-input>
             </div>
             <div class="col">
-              <paper-input required class="input_width" label="Monthly Family Expense" step="200" value="{{ajaxResponse.monthlyFamilyExpense}}" type="number">
+              <paper-input  required auto-validate error-message="{{localize('profile.Err_MonthlyExpense')}}" class="input_width" label="{{localize('profile.MonthlyExpense')}}" step="200" value="{{ajaxResponse.monthlyFamilyExpense}}" type="number">
                 <div slot="prefix" class="icon_space">€</div>
               </paper-input>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <paper-input class="input_width_incm" label="Income (additional)" step="200" value="{{ajaxResponse.monthlyFamilyIncomeAdditonal}}" type="number">
+              <paper-input class="input_width_incm" label="{{localize('profile.IncomeAdditional')}}" step="200" value="{{ajaxResponse.monthlyFamilyIncomeAdditonal}}" type="number">
                 <div slot="prefix" class="icon_space">€</div>
               </paper-input>
             </div>
             <div class="col"></div>                
           </div>
           <div class="declaration_text">
-      <paper-checkbox name="read" on-change ="sub" required> I hereby confirm that the information provided above is true and fair to the 
-                best of my knowledge and that I authorize ING to contact 
-                such agencies as needed to verify the correctness of the information provided</paper-checkbox>
+      <paper-checkbox name="read" on-change ="sub" required>
+        {{localize('profile.SubmitDeclaration')}}</paper-checkbox>
             </div>
         <div id="cover"></div>    
         
@@ -320,9 +333,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-              <label>Request call back and Visit nearest branch.</label>
-              <label>order to understand reject reason and provide necessary documents.</label>
-              <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>Ok</paper-button>               
+              <h2>{{localize('profile.KnockoutFailed1')}}</h2>
+              <label>{{localize('profile.KnockoutFailed2')}}</label>
+              <ul>
+                <li><label><a href="">{{localize('profile.KnockoutFailed3')}}</a></label></li>
+                <li><label>{{localize('profile.KnockoutFailed4')}}</label></li>
+              </ul>
+              
+              <paper-button class="custom dialog-orange" on-click="closeDialog" dialog-dismiss>
+                  {{localize('profile.Ok')}}
+                </paper-button>               
           </paper-dialog>
 
           <paper-dialog id="confirmText" no-cancel-on-outside-click entry-animation="scale-up-animation"
@@ -330,16 +350,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div on-click="closeDialog">
                   <paper-icon-button icon="icons:cancel" title="Close" dialog-dismiss></paper-icon-button>
               </div>
-             <label> Please ensure that the information you update matches with official records. </label>
-             <label>You will be required to submit documents to support the change before the mortgage is processed. </label>
-            <paper-button class="custom dialog-orange" on-click="knockOutCheck" dialog-dismiss>Ok</paper-button>               
+             <label> {{localize('profile.ConfirmText1')}} </label>
+             <label>{{localize('profile.ConfirmText2')}} </label>
+            <paper-button class="custom dialog-orange" on-click="knockOutCheck" dialog-dismiss>
+                {{localize('profile.Ok')}}
+              </paper-button>               
           </paper-dialog>
 
         <div class="next_button">
           <paper-spinner-lite active$="{{loader}}" class="orange active"></paper-spinner-lite>
-          <paper-button toggles raised class = "" on-tap="cancel">Cancel</paper-button>
+          <paper-button toggles raised class = "" on-tap="cancel"> 
+            {{localize('profile.Cancel')}}</paper-button>
           <!-- <paper-button hidden$="{{hide}}" toggles raised class ="" on-tap="knockOutCheck">Validate</paper-button>       -->
-   <paper-button disabled$="{{!checked}}" toggles raised class = "" on-tap="updateProfile">Validate</paper-button> 
+   <paper-button disabled$="{{!checked}}" toggles raised class = "" on-tap="updateProfile">
+     {{localize('profile.Validate')}}</paper-button> 
         </div>
     </div>
   </form>
